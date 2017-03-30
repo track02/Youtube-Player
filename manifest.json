@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "Youtube-Skipper",
+  "version": "0.01",
+
+  "description": "Youtube video skipper",
+
+  "icons": {
+    "24": "icons/flag-icon-24.png",
+    "48": "icons/flag-icon-48.png"
+  },
+
+
+  "applications": {
+    "gecko": {
+    "id": "a.clarke@runbox.com"
+    }
+  },
+
+  "permissions": [
+      "activeTab",
+      "storage"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/play_48.png",
+    "default_title": "Youtube Skipper",
+    "default_popup": "Pages/Skip.html"
+  }
+
+}
