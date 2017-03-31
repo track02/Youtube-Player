@@ -1,0 +1,13 @@
+# Youtube-Skipper
+Firefox extension to automatically skip Youtube videos by a specified amount
+
+## To Do
+
+- Write JS file to manage skipping
+  - Event handler for enable/disable buttons to set some persistent flag 
+  - Store time to skip when enable is selected (overwriting previous value)
+  - Generate timecode string, update url and refresh (check youtube api, may be better way to do this without reloading page)
+
+## Other
+
+- Icon from https://material.io/icons/
