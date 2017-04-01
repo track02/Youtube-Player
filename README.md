@@ -8,8 +8,9 @@ Firefox extension to automatically skip Youtube videos by a specified amount
   - Store time to skip when enable is selected (overwriting previous value)
   - Generate timecode string, update url and refresh (check youtube api, may be better way to do this without reloading page)
   
--Simplest method, extract current URL, if it's youtube then modify it with timecode and reload
--If a timecode is already present or it's not a youtube link then do nothing.
+- Simplest method, extract current URL, if it's youtube then modify it with timecode and reload
+- If a timecode is already present or it's not a youtube link then do nothing.
+- Window.location.href
 
 ## Other
 
