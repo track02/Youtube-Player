@@ -12,6 +12,10 @@ Firefox extension to automatically skip Youtube videos by a specified amount
 - If a timecode is already present or it's not a youtube link then do nothing.
 - Window.location.href
 
+- Two scripts, popup / page
+- popup - reads time input and creates timestring, stored in browser.local alongside enable/disable flag
+- page - loaded whenever on youtube domain, check browser.local and if enabled updates window.href
+
 ## Other
 
 - Icon from https://material.io/icons/
