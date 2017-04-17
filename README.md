@@ -1,5 +1,9 @@
 # Youtube-Skipper
-Firefox extension to automatically skip Youtube videos by a specified amount
+Firefox extension to automatically skip Youtube videos by a specified amount of time.
+
+Enter Min/Sec in the box and press enable, videos will automatically be skipped by the set amount.
+
+Disable the addon by hitting the disable button.
 
 ## To Do
 
