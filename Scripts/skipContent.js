@@ -5,10 +5,22 @@ console.log("Youtube page - script loaded");
 //Read from storage - Active_State
 activeState = false;
 
+minutes = 0;
+seconds = 0;
+
+
 browser.storage.local.get().then(
 function(data){
 	console.log(data);
-	activeState = (item.activeState);
+	activeState = (data.activeState);
+	minutes = data.minutes;
+	seconds = data.seconds;
+	
+	console.log(minutes);
+	console.log(seconds);
+	window.location.href = (window.location.href + "#t=" + minutes + "m");
+
+
 });
 
 
@@ -26,7 +38,6 @@ function(data){
 	//Build Timestamp
 	
 	//Set Timestamp
-	window.location.href = (window.location.href + "#t=5m");
 
 	//End_If
 	
