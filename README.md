@@ -13,6 +13,7 @@ Disable the addon by hitting the disable button.
 - skipContent.js is executed whenever a youtube page loads, if enable flag is found then add the timestamp to the url and reload
 - skipContent.js needs to check if current url already contains a timestamp, if so don't change anything
 - Investigate ability to access tab content.
+- Listen to Youtube tabs - and run script on  video changes
 
 ## Other
 
