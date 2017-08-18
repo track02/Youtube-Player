@@ -13,13 +13,13 @@
 
   "applications": {
     "gecko": {
-    "id": "a.clarke@runbox.com"
+    "id": "YSkip@track02.addons.mozilla.org"
     }
   },
 
   "permissions": [
-      "activeTab",
-      "storage"
+      "storage",
+	  "tabs"
   ],
 
   "content_scripts": [
