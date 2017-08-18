@@ -9,12 +9,11 @@ Disable the addon by hitting the disable button.
 
 ## To Do
 
-- Write function to store input time value and enable flag into local storage [X]
-- skipContent.js is executed whenever a youtube page loads, if flag is found then add the timestamp to the url and reload [X]
-- skipContent.js needs to check if current url already contains a timestamp, if so don't change anything [X]
-- Investigate ability to access tab content.  [TODO]
-- Listen to Youtube tabs - and run script on video changes. [TODO]
-- Investigate Youtube player control access [TODO]
+- Investigate ability to access tab content.  
+- Listen to Youtube tabs - and run script on video changes. 
+- Investigate Youtube player control access 
+- Consider merging into a single js file
+- Investigate execution of Skip.js without needing to click icon
 
 ## Other
 
