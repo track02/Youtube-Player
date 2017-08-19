@@ -46,34 +46,44 @@
 	{		
 		console.log("Tab: " + tabId + " changed");
 	}
+
+	function initialiseValues(data){
+		activeState = (data.activeState);
+			
+		if(activeState == true){
+			toggleButtons();
+		}			
+
+		if(isEmpty(data)){
+			mins.value = 0;
+			secs.value = 0;				
+			browser.storage.local.set({activeState: false, minutes: mins.value, seconds: secs.value});
+			console.log("This should trigger when the data is empty");
+		}
+		else
+		{
+			mins.value = data.minutes;
+			secs.value = data.seconds;
+		}
+	}
+
+	function handleUpdated(tabId, changeInfo, tabInfo) {
+ 	 console.log("Updated tab: " + tabId);	
+ 	 console.log("Changed attributes: ");	
+	 console.log(changeInfo);
+	 console.log("New tab Info: ");
+	 console.log(tabInfo);  
+	}
+
+
+	browser.storage.local.get().then(initialiseValues);
 	
 	mins.oninput = onInputHandler;
 	secs.oninput = onInputHandler;
 	enable.onclick = enableHandler;
 	disable.onclick = disableHandler;
+	browser.tabs.onUpdated.addListener(handleUpdated);
 	
-
-	browser.storage.local.get().then(	
-		function(data){	
-	
-			activeState = (data.activeState);
-			
-			if(activeState == true){
-				toggleButtons();
-			}			
-
-			if(isEmpty(data)){
-				mins.value = 0;
-				secs.value = 0;				
-				browser.storage.local.set({activeState: false, minutes: mins.value, seconds: secs.value});
-				console.log("This should trigger when the data is empty");
-			}
-			else
-			{
-				mins.value = data.minutes;
-				secs.value = data.seconds;
-			}
-		}
-	);
+		
 	
 	console.log("Loaded!");	

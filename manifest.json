@@ -5,6 +5,10 @@
 
   "description": "Youtube video skipper",
 
+  "background":{
+	"scripts" :["Scripts/TabMonitor.js"]
+  },
+
   "icons": {
     "24": "icons/flag-icon-24.png",
     "48": "icons/flag-icon-48.png"
