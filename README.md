@@ -9,11 +9,7 @@ Disable the addon by hitting the disable button.
 
 ## To Do
 
-- Investigate ability to access tab content.  
-- Listen to Youtube tabs - and run script on video changes. 
 - Investigate Youtube player control access 
-- Consider merging into a single js file
-- Investigate execution of Skip.js without needing to click icon
 
 ## Other
 
