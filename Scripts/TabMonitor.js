@@ -1,16 +1,53 @@
+activeState = false;
+minutes = 0;
+seconds = 0;
 
+function isEmpty(obj){
+	return (Object.getOwnPropertyNames(obj).length === 0);
+}
+
+function initialiseValues(data){
+
+	storedState= (data.activeState);
 	
-
-	function handleUpdated(tabId, changeInfo, tabInfo) {
- 	 console.log("Updated tab: " + tabId);	
- 	 console.log("Changed attributes: ");	
-	 console.log(changeInfo);
-	 console.log("New tab Info: ");
-	 console.log(tabInfo);  
+	if(isEmpty(data)){
+		browser.storage.local.set({activeState: false, minutes: 0, seconds: 0});
 	}
+	else
+	{
+		activeState = storedState;
+		minutes = data.minutes;
+		seconds = data.seconds;
+	}
+}
 
-	browser.tabs.onUpdated.addListener(handleUpdated);
+//On Youtube page & video playing without timestamp
+function checkUrl(url)
+{
+	return ((url.indexOf("youtube") !== -1) && (url.indexOf("#t=") == -1) && (url.indexOf("watch?") !== -1))
+}
+
+
+function insertTimestamp(tabId, changeInfo, tabInfo){
+
+	browser.storage.local.get().then(
+
+		function(data){
+			
+			activeState = (data.activeState);
+			minutes = data.minutes;
+			seconds = data.seconds;			
+			
+			//Check if url is available first
+			if (changeInfo.url && activeState && (checkUrl(changeInfo.url)) && (minutes > 0 || seconds > 0))
+			{
+				browser.tabs.update(tabId, {url: (changeInfo.url + "#t=" + minutes + "m" + seconds + "s")});
+			}
 	
-		
-	
-	console.log("Loaded!");	
+		}
+	);
+}
+
+
+browser.storage.local.get().then(initialiseValues);
+browser.tabs.onUpdated.addListener(insertTimestamp);
