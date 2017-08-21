@@ -2,7 +2,21 @@
 	visibility: hidden;
 }
 
-#enable_disable_buttons{
-
+#title{
+	margin-top: 5%;	
+	text-align: center;
 }
+
+#time_input_form{
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+
+#enable_disable_buttons{
+	margin-bottom: 5%;
+	text-align: center;
+}
+
+
 
