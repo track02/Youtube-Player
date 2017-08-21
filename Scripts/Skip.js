@@ -39,12 +39,14 @@
 		activeState = (data.activeState);
 			
 		if(activeState == true){
-			toggleButtons();
+			disable.classList.toggle("Hidden");
+		}
+		else{
+			enable.classList.toggle("Hidden");
 		}
 
 		mins.value = data.minutes;
-		secs.value = data.seconds;
-		
+		secs.value = data.seconds;		
 	}
 
 	browser.storage.local.get().then(initialiseValues);
