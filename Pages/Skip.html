@@ -3,23 +3,36 @@
 
 	<head>
 		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/CSS/bootstrap.min.css"/>
+		<link rel="stylesheet" href="/CSS/bootstrap-grid.min.css"/>
+		<link rel="stylesheet" href="/Font-Awesome/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="/CSS/Skip.css"/>
 	</head>
 
-	<body>
+	<body>		
+
+		<div class="container">
+			<h6>Youtube Skipper</h6>
+		</div>
+
+
+		<div class="container" id="time_input_form">
+				<form class="form-group">
+						<label class="control-label text-muted " for="min">Minutes</label>
+						<input class="form-control input-sm" name="minutes" id="min"  min="0" max="60" value="0">
+						<label class="text-muted control-label" for="sec">Seconds</label>
+						<input class="form-control input-sm" name="seconds" id="sec"  min="0" max="60" value="0">
+				</form>
+		</div>
 		
-		<p>Input how far you want to skip forwards and hit Enable</p>
-		<p>Press Disable to stop automatic skipping</p>
 		
-		<form>
-			Minutes
-			<input type="number" name="minutes" id="min"  min="0" value="0">
-			Seconds
-			<input type="number" name="seconds" id="sec"  min="0" max="60" value="0">
-		</form>
-		
-		<button id="Enable">Enable</button> <button class="Hidden" id="Disable" >Disable</button>	
-		
+		<div class="container">
+			<div class="btn-group" id="enable_disable_buttons">
+					<button class="Hidden btn btn-success btn-xs" id="Enable">Enable <i class="fa fa-check"></i></button> 
+					<button class="Hidden btn btn-danger btn-xs" id="Disable">Disable <i class="fa fa-times"></i></button>	
+			</div>
+		</div>
+
 	</body>
 	
 	<script type="text/javascript" src="/Scripts/Skip.js"></script>
