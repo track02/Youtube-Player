@@ -12,8 +12,12 @@
 	margin-right: 5%;
 }
 
+#now_playing{
+	margin-top: 5%;
+}
 
-#enable_disable_buttons{
+.button_grouping{
+	margin-top: 5%;
 	margin-bottom: 5%;
 	text-align: center;
 }
