@@ -19,8 +19,12 @@
 .button_grouping{
 	margin-top: 5%;
 	margin-bottom: 5%;
-	text-align: center;
+	text-align: center;	
 }
 
 
+.btn:focus, .btn:active {
+  outline: none;
+  box-shadow: none;
+}
 
