@@ -24,7 +24,9 @@ browser.runtime.onMessage.addListener(request => {
 		playpause = document.getElementsByClassName("ytp-play-button")[0];
 		prev = document.getElementsByClassName("ytp-prev-button")[0];
 		next = document.getElementsByClassName("ytp-next-button")[0];
+		video = document.getElementsByTagName("video")[0];
 		vol = document.getElementsByClassName("ytp-volume-panel")[0];
+		volume = vol.getAttribute("aria-valuenow");
 
 		console.log("parsing command " + cmd);
 		
@@ -35,11 +37,11 @@ browser.runtime.onMessage.addListener(request => {
 		else if (cmd === "pause"){
 			playpause.click();
 		}
-		else if (cmd === "volume down"){
-			//vol.aria-valuenow -= 5;
+		else if (cmd === "volume down" && video){
+			video.volume -= 0.01;
 		}
-		else if (cmd === "volume up"){
-			//vol.aria-valuenow += 5;
+		else if (cmd === "volume up" && video){
+			video.volume += 0.01;
 		}
 		else if (cmd === "next video"){
 			next.click();
