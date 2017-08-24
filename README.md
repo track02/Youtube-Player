@@ -9,9 +9,10 @@ Disable the addon by hitting the disable button.
 
 ## To Do
 
-- Investigate Youtube player control access (Done for HTML5 Video, look into Youtube API)
-- Implement PageListener functionality, player controls, message parsing, request responses (video name, next video, etc)
+- Implement volume controls 
 - Consider moving timestamp / skip functionality into page listener and have tabmonitor send a request on tab change.
+- Tidy up popup layout & button arrangement
+- Format + Refactor code
 
 ## Other
 
