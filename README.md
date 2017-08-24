@@ -9,8 +9,13 @@ Disable the addon by hitting the disable button.
 
 ## To Do
 
-- Investigate Youtube player control access 
+- Show currently playing video and next video in playlist in popup.
+- Consider moving timestamp / skip functionality into page listener and have tabmonitor send a request on tab change.
+- Tidy up popup layout & button arrangement
+- Format + Refactor code
 
 ## Other
 
 - Icon from https://material.io/icons/
+- Bootstrap CSS https://v4-alpha.getbootstrap.com/
+- Font Awesome http://fontawesome.io/icons/

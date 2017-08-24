@@ -42,6 +42,7 @@ function insertTimestamp(tabId, changeInfo, tabInfo){
 			if (changeInfo.url && activeState && (checkUrl(changeInfo.url)) && (minutes > 0 || seconds > 0))
 			{
 				browser.tabs.update(tabId, {url: (changeInfo.url + "#t=" + minutes + "m" + seconds + "s")});
+				browser.storage.local.set({activeState: true, minutes: minutes, seconds: seconds,  tabId: tabId});
 			}
 	
 		}

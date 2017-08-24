@@ -2,9 +2,15 @@
 	visibility: hidden;
 }
 
-#title{
+.title{
 	margin-top: 5%;	
 	text-align: center;
+}
+
+.heading{
+	margin-left: 3%;
+	margin-top: 5%;
+	text-align: left;
 }
 
 #time_input_form{
@@ -12,11 +18,21 @@
 	margin-right: 5%;
 }
 
+#now_playing{
+	margin-top: 5%;
+}
 
-#enable_disable_buttons{
-	margin-bottom: 5%;
-	text-align: center;
+.button_grouping{
+	text-align: center;	
+}
+
+#player_buttons{
+	margin-bottom: 10%;
 }
 
 
+.btn:focus, .btn:active {
+  outline: none;
+  box-shadow: none;
+}
 
