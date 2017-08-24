@@ -5,36 +5,6 @@
 *
 */
 
-
-
-function play(){
-	console.log("play");
-}
-
-function pause(){
-	console.log("pause");
-}
-
-function volumeUp(){
-	console.log("vup");
-}
-
-function volumeDown(){
-	console.log("vdn");
-}
-
-function nextVideo(){
-	console.log("next");
-}
-
-function previousVideo(){
-	console.log("prev");
-}
-
-function videoOk(){
-	return (typeof video != 'undefined' && video)
-}
-
 console.log("Page listener loaded");
 //console.log(video);
 
@@ -48,28 +18,37 @@ console.log("Page listener loaded");
 
 browser.runtime.onMessage.addListener(request => {
 
-	console.log("Received");
+	console.log("Received");	
 
-	video = document.getElementsByTagName("video")[0];
-
-	if (videoOk){
-
-		console.log("parsing command");
 		cmd = request.command;
+		playpause = document.getElementsByClassName("ytp-play-button")[0];
+		prev = document.getElementsByClassName("ytp-prev-button")[0];
+		next = document.getElementsByClassName("ytp-next-button")[0];
+		vol = document.getElementsByClassName("ytp-volume-panel")[0];
 
-		if (cmd == "play")
-			play();
-		if (cmd == "pause")
-			pause();
-		if (cmd == "volume down")
-			volumeDown();
-		if (cmd == "volume up")
-			volumeUp();
-		if (cmd == "next video")
-			nextVideo();
-		if (cmd == "prev video")
-			previousVideo();	
+		console.log("parsing command " + cmd);
+		
 
-	}
+		if (cmd === "play"){
+			playpause.click();
+		}
+		else if (cmd === "pause"){
+			playpause.click();
+		}
+		else if (cmd === "volume down"){
+			//vol.aria-valuenow -= 5;
+		}
+		else if (cmd === "volume up"){
+			//vol.aria-valuenow += 5;
+		}
+		else if (cmd === "next video"){
+			next.click();
+		}
+		else if (cmd === "prev video"){
+			prev.click()	
+		}
+		else{
+			console.log("invalid command");
+		}
 	
 });
