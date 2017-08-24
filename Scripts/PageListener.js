@@ -21,12 +21,13 @@ browser.runtime.onMessage.addListener(request => {
 	console.log("Received");	
 
 		cmd = request.command;
+		//Hook into player controls
 		playpause = document.getElementsByClassName("ytp-play-button")[0];
 		prev = document.getElementsByClassName("ytp-prev-button")[0];
 		next = document.getElementsByClassName("ytp-next-button")[0];
+		//Html5 video element
 		video = document.getElementsByTagName("video")[0];
-		vol = document.getElementsByClassName("ytp-volume-panel")[0];
-		volume = vol.getAttribute("aria-valuenow");
+
 
 		console.log("parsing command " + cmd);
 		
