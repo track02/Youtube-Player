@@ -47,6 +47,12 @@ browser.runtime.onMessage.addListener(request => {
 		else if (cmd === "prev video"){
 			prev.click()	
 		}
+		else if (cmd === "video title"){
+			//Send a response
+		}
+		else if (cmd === "next video"){
+			//Send a response
+		}
 		else{
 			console.log("invalid command");
 		}

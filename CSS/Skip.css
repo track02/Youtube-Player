@@ -2,9 +2,15 @@
 	visibility: hidden;
 }
 
-#title{
+.title{
 	margin-top: 5%;	
 	text-align: center;
+}
+
+.heading{
+	margin-left: 3%;
+	margin-top: 5%;
+	text-align: left;
 }
 
 #time_input_form{
@@ -17,9 +23,11 @@
 }
 
 .button_grouping{
-	margin-top: 5%;
-	margin-bottom: 5%;
 	text-align: center;	
+}
+
+#player_buttons{
+	margin-bottom: 10%;
 }
 
 
