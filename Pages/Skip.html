@@ -10,54 +10,62 @@
 
 	<body>		
 
-		<div class="title">
-			<h6>Auto-Skip Controls</h6>
+	<div class="container">
+
+		<div class="row">
+			<div class="col title justify-content-center">
+				<h6>Auto-Skip Controls</h6>
+			</div>
 		</div>
 
-		<div id="time_input_form">
-				<form class="form-group">
-					<div class="input-group input-group-sm">		
-						<span class="input-group-addon" id="minaddon">Minutes</span>					
-						<input class="form-control" name="minutes" id="min"  min="0" max="60" value="0">
-					</div>
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon" id="secaddon">Seconds</span>
-						<input class="form-control" name="seconds" id="sec"  min="0" max="60" value="0">
-					</div>
-
-				</form>
+		<div class="row">
+			<span class="input-group col">		
+				<span class="input-group-addon" id="minaddon">Minutes</span>					
+				<input class="form-control" name="minutes" id="min"  min="0" max="60" value="0" size="1" placeholder="0">
+				<span class="input-group-addon" id="secaddon">Seconds</span>
+				<input class="form-control" name="seconds" id="sec"  min="0" max="60" value="0" size="1" placeholder="0">
+			</span>
 		</div>
+
 		
-		
-		<div class="button_grouping" id="enable_disable_buttons">
-			<div class="btn-group" >
+		<div class="row">
+			<div class="button_grouping col" id="enable_disable_buttons">
+				<div class="btn-group" >
 					<button class="Hidden btn btn-success btn-xs" id="Enable">Enable <i class="fa fa-check"></i></button> 
 					<button class="Hidden btn btn-danger btn-xs" id="Disable">Disable <i class="fa fa-times"></i></button>	
+				</div>
 			</div>
 		</div>
 
-
-		<div class="heading">
-			<h6>Now Playing: </h6>
-		</div>
-
-		<div class="heading">
-			<h6>Up Next: </h6>
-		</div>
-
-		<div class="button_grouping" id="player_buttons">
-			<div class="btn-group">
-				<button class="btn btn-primary btn-md" id="prev"><i class="fa fa-fast-backward"></i></button>
-				<button class="btn btn-primary btn-md" id="play"><i class="fa fa-play"></i></button>
-				<button class="btn btn-primary btn-md" id="pause"><i class="fa fa-pause"></i></button>
-				<button class="btn btn-primary btn-md" id="next"><i class="fa fa-fast-forward"></i></button>
-				<button class="btn btn-primary btn-md" id="volume_up"><i class="fa fa-volume-up"></i></button>
-				<button class="btn btn-primary btn-md" id="volume_down"><i class="fa fa-volume-down"></i></button>
+		<div class="row">
+			<div class="heading col">
+				<h6>Now Playing: </h6>
 			</div>
 		</div>
 
-	</body>
-	
-	<script type="text/javascript" src="/Scripts/Skip.js"></script>
+		<div class="row">
+			<div class="heading col">
+				<h6>Up Next: </h6>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="button_grouping col" id="player_buttons">
+				<div class="btn-group">
+					<button class="btn btn-primary btn-md" id="prev"><i class="fa fa-fast-backward"></i></button>
+					<button class="btn btn-primary btn-md" id="play"><i class="fa fa-play"></i></button>
+					<button class="btn btn-primary btn-md" id="pause"><i class="fa fa-pause"></i></button>
+					<button class="btn btn-primary btn-md" id="next"><i class="fa fa-fast-forward"></i></button>
+					<button class="btn btn-primary btn-md" id="volume_up"><i class="fa fa-volume-up"></i></button>
+					<button class="btn btn-primary btn-md" id="volume_down"><i class="fa fa-volume-down"></i></button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+<script type="text/javascript" src="/Scripts/Skip.js"></script>
 
 </html>
