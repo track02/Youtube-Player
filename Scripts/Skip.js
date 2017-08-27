@@ -1,6 +1,7 @@
 
 	mins = document.getElementById("min");
 	secs = document.getElementById("sec");
+	skip = document.getElementById("skp");
 	disable = document.getElementById("Disable");
 	enable = document.getElementById("Enable");
 	play = document.getElementById("play");
@@ -9,7 +10,7 @@
 	prev = document.getElementById("prev");
 	volUp = document.getElementById("volume_up");
 	volDn = document.getElementById("volume_down");
-
+	timSkp = document.getElementById("time_skip");
 
 	function enableHandler(event){
 
@@ -59,18 +60,18 @@
 		}
 
 		mins.value = data.minutes;
-		secs.value = data.seconds;		
+		secs.value = data.seconds;
 	}
 
 
-	function sendCommand(cmd){
+	function sendCommand(cmd, param){
 
 		function msgTabs(tabs) {
 			for (let tab of tabs) {
 
 				if(tab.url.indexOf("youtube") != -1 && tab.url.indexOf("watch?") != -1){
 					console.log("sending message to " + tab.url);
-					browser.tabs.sendMessage(tab.id, {command: cmd});
+					browser.tabs.sendMessage(tab.id, {command: cmd, parameter: param});
 				}  	
 			}
 		}
@@ -88,6 +89,7 @@
 
 	mins.oninput = onInputHandler;
 	secs.oninput = onInputHandler;
+	skp.oninput = onInputHandler;
 	enable.onclick = enableHandler;
 	disable.onclick = disableHandler;
 	play.onclick = function(e) {sendCommand("play")};
@@ -96,6 +98,7 @@
 	prev.onclick = function(e) {sendCommand("prev video")};
 	volUp.onclick = function(e) {sendCommand("volume up")};
 	volDn.onclick = function(e) {sendCommand("volume down")};
+	timSkp.onclick = function(e) {sendCommand("time skip", skip.value)};
 
 
 

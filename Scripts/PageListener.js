@@ -6,6 +6,7 @@
 */
 
 console.log("Page listener loaded");
+
 //console.log(video);
 
 
@@ -19,7 +20,6 @@ console.log("Page listener loaded");
 browser.runtime.onMessage.addListener(request => {
 
 	console.log("Received");	
-
 		cmd = request.command;
 		//Hook into player controls
 		playpause = document.getElementsByClassName("ytp-play-button")[0];
@@ -28,9 +28,8 @@ browser.runtime.onMessage.addListener(request => {
 		//Html5 video element
 		video = document.getElementsByTagName("video")[0];
 
-
 		console.log("parsing command " + cmd);
-		
+		console.log(request.parameter);
 
 		if (cmd === "play"){
 			playpause.click();
@@ -55,6 +54,10 @@ browser.runtime.onMessage.addListener(request => {
 		}
 		else if (cmd === "next video"){
 			//Send a response
+		}
+		else if(cmd == "time skip"){
+
+			video.currentTime += parseInt(request.parameter);
 		}
 		else{
 			console.log("invalid command");
