@@ -55,9 +55,11 @@ browser.runtime.onMessage.addListener(request => {
 		else if (cmd === "next video"){
 			//Send a response
 		}
-		else if(cmd == "time skip"){
-
+		else if(cmd == "time skip f"){
 			video.currentTime += parseInt(request.parameter);
+		}
+		else if(cmd == "time skip b"){
+			video.currentTime -= parseInt(request.parameter);
 		}
 		else{
 			console.log("invalid command");

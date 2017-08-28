@@ -10,7 +10,8 @@
 	prev = document.getElementById("prev");
 	volUp = document.getElementById("volume_up");
 	volDn = document.getElementById("volume_down");
-	timSkp = document.getElementById("time_skip");
+	timSkpF = document.getElementById("time_skip_fwd");
+	timSkpB = document.getElementById("time_skip_back");
 
 	function enableHandler(event){
 
@@ -18,7 +19,8 @@
 		//Write to storage - Active_State = True
 		browser.storage.local.set({activeState: true, 
 								   minutes: mins.value, 
-								   seconds: secs.value});
+								   seconds: secs.value,
+								   skip: skip.value});
 		
 		//Toggle button visibilty
 		toggleButtons();					
@@ -29,7 +31,8 @@
 		//Write to storage - Active_State = False
 		browser.storage.local.set({activeState: false,
 								   minutes: mins.value, 
-								   seconds: secs.value});
+								   seconds: secs.value,
+								   skip: skip.value});
 		
 		//Toggle button visibility
 		toggleButtons();		
@@ -44,7 +47,8 @@
 	function onInputHandler(event){
 		browser.storage.local.set({activeState: true,
 								   minutes: mins.value, 
-								   seconds: secs.value});
+								   seconds: secs.value,
+								   skip: skip.value});
 	}
 	
 
@@ -61,6 +65,7 @@
 
 		mins.value = data.minutes;
 		secs.value = data.seconds;
+		skip.value = data.skip;
 	}
 
 
@@ -98,8 +103,8 @@
 	prev.onclick = function(e) {sendCommand("prev video")};
 	volUp.onclick = function(e) {sendCommand("volume up")};
 	volDn.onclick = function(e) {sendCommand("volume down")};
-	timSkp.onclick = function(e) {sendCommand("time skip", skip.value)};
-
+	timSkpF.onclick = function(e) {sendCommand("time skip f", skip.value)};
+	timSkpB.onclick = function(e) {sendCommand("time skip b", skip.value)};
 
 
 
