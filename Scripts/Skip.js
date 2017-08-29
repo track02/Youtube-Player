@@ -1,9 +1,7 @@
 
 	mins = document.getElementById("min");
 	secs = document.getElementById("sec");
-	skip = document.getElementById("skp");
-	disable = document.getElementById("Disable");
-	enable = document.getElementById("Enable");
+	enabled = document.getElementById("enabled");
 	play = document.getElementById("play");
 	pause = document.getElementById("pause");
 	next = document.getElementById("next");
@@ -12,37 +10,20 @@
 	volDn = document.getElementById("volume_down");
 	timSkpF = document.getElementById("time_skip_fwd");
 	timSkpB = document.getElementById("time_skip_back");
+	skip = document.getElementById("skip_sec");
 
 	function enableHandler(event){
 
-				
+		console.log("checked");
 		//Write to storage - Active_State = True
-		browser.storage.local.set({activeState: true, 
+		browser.storage.local.set({activeState: enabled.checked, 
 								   minutes: mins.value, 
 								   seconds: secs.value,
 								   skip: skip.value});
-		
-		//Toggle button visibilty
-		toggleButtons();					
+				
 	}
 
-	function disableHandler(event){		
-		
-		//Write to storage - Active_State = False
-		browser.storage.local.set({activeState: false,
-								   minutes: mins.value, 
-								   seconds: secs.value,
-								   skip: skip.value});
-		
-		//Toggle button visibility
-		toggleButtons();		
-	}
 
-	function toggleButtons()
-	{
-		enable.classList.toggle("Hidden");
-		disable.classList.toggle("Hidden");
-	}
 	
 	function onInputHandler(event){
 		browser.storage.local.set({activeState: true,
@@ -57,10 +38,10 @@
 		activeState = (data.activeState);
 			
 		if(activeState == true){
-			disable.classList.toggle("Hidden");
+			enabled.checked = true;
 		}
 		else{
-			enable.classList.toggle("Hidden");
+			enabled.checked = false;
 		}
 
 		mins.value = data.minutes;
@@ -94,9 +75,9 @@
 
 	mins.oninput = onInputHandler;
 	secs.oninput = onInputHandler;
-	skp.oninput = onInputHandler;
-	enable.onclick = enableHandler;
-	disable.onclick = disableHandler;
+	skip.oninput = onInputHandler;
+
+	enabled.onclick = enableHandler;
 	play.onclick = function(e) {sendCommand("play")};
 	pause.onclick = function(e) {sendCommand("pause")};
 	next.onclick = function(e) {sendCommand("next video")};

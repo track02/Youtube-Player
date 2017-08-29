@@ -20,18 +20,9 @@
 
 		<div id="time_input_form">
 				<form class="form-group">
-					<div class="input-group input-group-sm">		
-						<span class="input-group-addon" id="minaddon">Minutes</span>					
-						<input class="form-control" name="minutes" id="min"  min="0" max="60" value="0">
-					</div>
 					<div class="input-group input-group-sm">
-						<span class="input-group-addon" id="secaddon">Seconds</span>
-						<input class="form-control" name="seconds" id="sec"  min="0" max="60" value="0">
-					</div>
-					
-					<div class="input-group input-group-sm">
-						<span class="input-group-addon" id="secaddon">Skip by:</span>
-						<input class="form-control" name="skipBy" id="skp"  min="0" value="0">
+						<span class="input-group-addon" id="skip_secaddon">Seconds</span>
+						<input class="form-control" name="seconds" id="skip_sec"  min="0" max="60" value="0">
 					</div>
 				</form>
 		</div>
@@ -42,18 +33,13 @@
 				<input class="form-control" name="minutes" id="min"  min="0" max="60" value="0" size="1" placeholder="0">
 				<span class="input-group-addon" id="secaddon">Seconds</span>
 				<input class="form-control" name="seconds" id="sec"  min="0" max="60" value="0" size="1" placeholder="0">
+				<label class="form-check-label">
+				<input class="form-check-input" type="checkbox" id="enabled">Skip
+				</label>
 			</span>
 		</div>
 
-		
-		<div class="row">
-			<div class="button_grouping col" id="enable_disable_buttons">
-				<div class="btn-group" >
-					<button class="Hidden btn btn-success btn-xs" id="Enable">Enable <i class="fa fa-check"></i></button> 
-					<button class="Hidden btn btn-danger btn-xs" id="Disable">Disable <i class="fa fa-times"></i></button>	
-				</div>
-			</div>
-		</div>
+
 
 		<div class="row">
 			<div class="heading col">
