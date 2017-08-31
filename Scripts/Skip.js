@@ -57,9 +57,17 @@
 
 				if(tab.url.indexOf("youtube") != -1 && tab.url.indexOf("watch?") != -1){
 					console.log("sending message to " + tab.url);
-					browser.tabs.sendMessage(tab.id, {command: cmd, parameter: param});
+					browser.tabs.sendMessage(tab.id, {command: cmd, parameter: param})
+											.then(response => {
+
+												console.log(response.value);
+												return response.value;
+
+											});
 				}  	
 			}
+
+			return "";
 		}
 
 		function onError(error) {
@@ -86,6 +94,9 @@
 	volDn.onclick = function(e) {sendCommand("volume down")};
 	timSkpF.onclick = function(e) {sendCommand("time skip f", skip.value)};
 	timSkpB.onclick = function(e) {sendCommand("time skip b", skip.value)};
+
+	sendCommand("video title");
+	sendCommand("next video title");
 
 
 

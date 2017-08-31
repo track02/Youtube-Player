@@ -50,15 +50,17 @@ browser.runtime.onMessage.addListener(request => {
 			prev.click()	
 		}
 		else if (cmd === "video title"){
+			return Promise.resolve({value: "Video title"});
 			//Send a response
 		}
-		else if (cmd === "next video"){
+		else if (cmd === "next video title"){
+			return Promise.resolve({value: "Next Video"});
 			//Send a response
 		}
-		else if(cmd == "time skip f"){
+		else if(cmd === "time skip f"){
 			video.currentTime += parseInt(request.parameter);
 		}
-		else if(cmd == "time skip b"){
+		else if(cmd === "time skip b"){
 			video.currentTime -= parseInt(request.parameter);
 		}
 		else{
