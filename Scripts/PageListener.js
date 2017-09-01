@@ -28,9 +28,6 @@ browser.runtime.onMessage.addListener(request => {
 		//Html5 video element
 		video = document.getElementsByTagName("video")[0];
 
-		console.log("parsing command " + cmd);
-		console.log(request.parameter);
-
 		if (cmd === "play"){
 			playpause.click();
 		}
@@ -50,11 +47,16 @@ browser.runtime.onMessage.addListener(request => {
 			prev.click()	
 		}
 		else if (cmd === "video title"){
-			return Promise.resolve({value: "Video title"});
+
+			title = (document.getElementsByTagName("title")[0]).innerHTML;
+			return Promise.resolve({value: title});
 			//Send a response
 		}
 		else if (cmd === "next video title"){
-			return Promise.resolve({value: "Next Video"});
+
+			nextVideo = (document.getElementsByClassName("ytp-next-button")[0]).dataset.tooltipText;
+			
+			return Promise.resolve({value: nextVideo});
 			//Send a response
 		}
 		else if(cmd === "time skip f"){

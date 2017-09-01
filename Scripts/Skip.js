@@ -60,14 +60,22 @@
 					browser.tabs.sendMessage(tab.id, {command: cmd, parameter: param})
 											.then(response => {
 
-												console.log(response.value);
-												return response.value;
+												console.log("Received");
+												console.log(cmd);
+
+												if (cmd === "video title"){
+													document.getElementById("now_playing").innerHTML = "Now Playing: " + response.value;
+												}
+
+												if (cmd == "next video title"){
+													console.log("HERE " + response.value);
+													document.getElementById("up_next").innerHTML = "Up Next: " + response.value;
+												}
+
 
 											});
 				}  	
 			}
-
-			return "";
 		}
 
 		function onError(error) {
@@ -84,8 +92,8 @@
 	mins.oninput = onInputHandler;
 	secs.oninput = onInputHandler;
 	skip.oninput = onInputHandler;
-
 	enabled.onclick = enableHandler;
+
 	play.onclick = function(e) {sendCommand("play")};
 	pause.onclick = function(e) {sendCommand("pause")};
 	next.onclick = function(e) {sendCommand("next video")};
@@ -97,7 +105,3 @@
 
 	sendCommand("video title");
 	sendCommand("next video title");
-
-
-
-
