@@ -64,12 +64,12 @@
 												console.log(cmd);
 
 												if (cmd === "video title"){
-													document.getElementById("now_playing").innerHTML = "Now Playing: " + response.value;
+													document.getElementById("now_playing").innerHTML = response.value;
 												}
 
 												if (cmd == "next video title"){
 													console.log("HERE " + response.value);
-													document.getElementById("up_next").innerHTML = "Up Next: " + response.value;
+													document.getElementById("up_next").innerHTML = response.value;
 												}
 
 

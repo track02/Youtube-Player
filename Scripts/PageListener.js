@@ -35,10 +35,10 @@ browser.runtime.onMessage.addListener(request => {
 			playpause.click();
 		}
 		else if (cmd === "volume down" && video){
-			video.volume -= 0.01;
+			video.volume -= 0.1;
 		}
 		else if (cmd === "volume up" && video){
-			video.volume += 0.01;
+			video.volume += 0.1;
 		}
 		else if (cmd === "next video"){
 			next.click();
