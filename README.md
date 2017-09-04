@@ -12,6 +12,7 @@ Disable the addon by hitting the disable button.
 - Scrolling text for next video / current video titles
 - Consider moving timestamp / skip functionality into page listener and have tabmonitor send a request on tab change.
 - Tidy up popup layout & button arrangement
+- Volume slider
 - Format + Refactor code
 
 ## Other
