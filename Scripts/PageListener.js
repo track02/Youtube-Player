@@ -1,47 +1,7 @@
 
 browser.runtime.onMessage.addListener(request => {
 
-<<<<<<< HEAD
-	console.log("Received");	
-		cmd = request.command;
-		//Hook into player controls
-		playpause = document.getElementsByClassName("ytp-play-button")[0];
-		prev = document.getElementsByClassName("ytp-prev-button")[0];
-		next = document.getElementsByClassName("ytp-next-button")[0];
-		//Html5 video element
-		video = document.getElementsByTagName("video")[0];
 
-		if (cmd === "play"){
-			playpause.click();
-		}
-		else if (cmd === "pause"){
-			playpause.click();
-		}
-		else if (cmd === "volume down" && video){
-			video.volume -= 0.1;
-		}
-		else if (cmd === "volume up" && video){
-			video.volume += 0.1;
-		}
-		else if (cmd === "adjust volume" && video){
-			video.volume = parseFloat(request.parameter);
-		}
-		else if (cmd === "next video"){
-			next.click();
-		}
-		else if (cmd === "prev video"){
-			prev.click()	
-		}
-		else if (cmd === "video title"){
-
-			title = (document.getElementsByTagName("title")[0]).innerHTML;
-			return Promise.resolve({value: title});
-			//Send a response
-		}
-		else if (cmd === "next video title"){
-
-			nextVideo = (document.getElementsByClassName("ytp-next-button")[0]).dataset.tooltipText;
-=======
 	cmd = request.command;
 
 	//Hook into player controls
@@ -64,6 +24,9 @@ browser.runtime.onMessage.addListener(request => {
 	else if (cmd === "volume up" && video){
 		video.volume += 0.1;
 	}
+	else if (cmd === "adjust volume" && video){
+			video.volume = parseFloat(request.parameter);
+	}
 	else if (cmd === "next video"){
 		next.click();
 	}
@@ -79,7 +42,6 @@ browser.runtime.onMessage.addListener(request => {
 	else if (cmd === "next video title"){
 
 		nextVideo = (document.getElementsByClassName("ytp-next-button")[0]).dataset.tooltipText;
->>>>>>> cb63e96320b591aa9d38c61706907035187056fa
 			
 		return Promise.resolve({value: nextVideo});
 		//Send a response
