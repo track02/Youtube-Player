@@ -33,6 +33,13 @@
 								   skip: skip.value});
 	}
 	
+
+	function onChangeHandler(event){
+		browser.storage.local.set({vslider: volumeSlider.value});
+		sendCommand("adjust volume", volumeSlider.value);
+	}
+	
+	
 	
 
 	function initialiseValues(data){
@@ -46,6 +53,7 @@
 			enabled.checked = false;
 		}
 
+		volumeSlider.value = data.vslider;
 		mins.value = data.minutes;
 		secs.value = data.seconds;
 		skip.value = data.skip;
@@ -105,7 +113,7 @@
 	volDn.onclick = function(e) {sendCommand("volume down")};
 	timSkpF.onclick = function(e) {sendCommand("time skip f", skip.value)};
 	timSkpB.onclick = function(e) {sendCommand("time skip b", skip.value)};
-	volumeSlider.onchange = function(e) {sendCommand("adjust volume", volumeSlider.value)};
+	volumeSlider.onchange = onChangeHandler;
 
 	
 	
