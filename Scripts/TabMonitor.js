@@ -27,7 +27,6 @@ function checkUrl(url)
 	return ((url.indexOf("youtube") !== -1) && (url.indexOf("#t=") == -1) && (url.indexOf("watch?") !== -1))
 }
 
-
 function insertTimestamp(tabId, changeInfo, tabInfo){
 
 	browser.storage.local.get().then(
@@ -44,11 +43,15 @@ function insertTimestamp(tabId, changeInfo, tabInfo){
 				browser.tabs.update(tabId, {url: (changeInfo.url + "#t=" + minutes + "m" + seconds + "s")});
 				browser.storage.local.set({activeState: true, minutes: minutes, seconds: seconds});
 			}
+
+			browser.runtime.sendMessage({
+    			command: "update headings"
+  			});
 	
 		}
 	);
 }
 
-
 browser.storage.local.get().then(initialiseValues);
 browser.tabs.onUpdated.addListener(insertTimestamp);
+

@@ -14,7 +14,6 @@
 
 	function enableHandler(event){
 
-		console.log("checked");
 		//Write to storage - Active_State = True
 		browser.storage.local.set({activeState: enabled.checked, 
 								   minutes: mins.value, 
@@ -56,34 +55,24 @@
 			for (let tab of tabs) {
 
 				if(tab.url.indexOf("youtube") != -1 && tab.url.indexOf("watch?") != -1){
-					console.log("sending message to " + tab.url);
+
 					browser.tabs.sendMessage(tab.id, {command: cmd, parameter: param})
 											.then(response => {
-
-												console.log("Received");
-												console.log(cmd);
 
 												if (cmd === "video title"){
 													document.getElementById("now_playing").innerHTML = response.value;
 												}
 
 												if (cmd == "next video title"){
-													console.log("HERE " + response.value);
 													document.getElementById("up_next").innerHTML = response.value;
 												}
-
-
 											});
 				}  	
 			}
 		}
 
-		function onError(error) {
-			console.log(`Error: ${error}`);
-		}
-
 		var querying = browser.tabs.query({}); //Create a query to fetch all tags
-		querying.then(msgTabs, onError); //If successful send a message to each tag
+		querying.then(msgTabs); //If successful send a message to each tag
 	}
 
 
@@ -105,3 +94,16 @@
 
 	sendCommand("video title");
 	sendCommand("next video title");
+
+	browser.runtime.onMessage.addListener(request => {
+
+		cmd = request.command;
+
+
+		console.log("Received Message: " + cmd);
+
+		if (cmd === "update headings"){
+			sendCommand("video title");
+			sendCommand("next video title");
+		}
+	});
