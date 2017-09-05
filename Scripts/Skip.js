@@ -11,6 +11,7 @@
 	timSkpF = document.getElementById("time_skip_fwd");
 	timSkpB = document.getElementById("time_skip_back");
 	skip = document.getElementById("skip_sec");
+	volumeSlider = document.getElementById("volume_slider");
 
 	function enableHandler(event){
 
@@ -31,6 +32,7 @@
 								   seconds: secs.value,
 								   skip: skip.value});
 	}
+	
 	
 
 	function initialiseValues(data){
@@ -91,9 +93,10 @@
 
 	mins.oninput = onInputHandler;
 	secs.oninput = onInputHandler;
-	skip.oninput = onInputHandler;
+	skip.oninput = onInputHandler
 	enabled.onclick = enableHandler;
 
+	
 	play.onclick = function(e) {sendCommand("play")};
 	pause.onclick = function(e) {sendCommand("pause")};
 	next.onclick = function(e) {sendCommand("next video")};
@@ -102,6 +105,9 @@
 	volDn.onclick = function(e) {sendCommand("volume down")};
 	timSkpF.onclick = function(e) {sendCommand("time skip f", skip.value)};
 	timSkpB.onclick = function(e) {sendCommand("time skip b", skip.value)};
+	volumeSlider.onchange = function(e) {sendCommand("adjust volume", volumeSlider.value)};
 
+	
+	
 	sendCommand("video title");
 	sendCommand("next video title");

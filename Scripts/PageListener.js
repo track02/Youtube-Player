@@ -40,6 +40,9 @@ browser.runtime.onMessage.addListener(request => {
 		else if (cmd === "volume up" && video){
 			video.volume += 0.1;
 		}
+		else if (cmd === "adjust volume" && video){
+			video.volume = parseFloat(request.parameter);
+		}
 		else if (cmd === "next video"){
 			next.click();
 		}
