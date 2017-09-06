@@ -9,6 +9,7 @@ Disable the addon by hitting the disable button.
 
 ## To Do
 
+- Video playing time -> played / remaining
 - Consider moving timestamp / skip functionality into page listener and have tabmonitor send a request on tab change.
 - Tidy up popup layout & button arrangement
 - Format + Refactor code
