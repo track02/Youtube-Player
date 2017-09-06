@@ -9,3 +9,34 @@
 }
 
 
+
+  
+ 
+
+.marquee {
+  height: 25px;
+  width: 210px;
+
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee div {
+  display: block;
+  width: 400%;
+  height: 30px;
+
+  position: absolute;
+  overflow: hidden;
+
+  animation: marquee 5s linear infinite;
+}
+
+
+
+@keyframes marquee {
+  0% { left: 100%; }
+  100% { left: -150%; }
+}
+
+
