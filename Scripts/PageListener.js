@@ -15,15 +15,6 @@ browser.runtime.onMessage.addListener(request => {
 	if (cmd === "play"){
 		playpause.click();
 	}
-	else if (cmd === "pause"){
-		playpause.click();
-	}
-	else if (cmd === "volume down" && video){
-		video.volume -= 0.1;
-	}
-	else if (cmd === "volume up" && video){
-		video.volume += 0.1;
-	}
 	else if (cmd === "adjust volume" && video){
 			video.volume = parseFloat(request.parameter);
 	}
