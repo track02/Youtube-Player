@@ -2,7 +2,7 @@
 	mins = document.getElementById("min");
 	secs = document.getElementById("sec");
 	enabled = document.getElementById("enabled");
-	playPause = document.getElementById("play");
+	playPause = document.getElementById("play_pause");
 	pause = document.getElementById("pause");
 	next = document.getElementById("next");
 	prev = document.getElementById("prev");
@@ -35,10 +35,7 @@
 	function onChangeHandler(event){
 		browser.storage.local.set({vslider: volumeSlider.value});
 		sendCommand("adjust volume", volumeSlider.value);
-	}
-	
-	
-	
+	}		
 
 	function initialiseValues(data){
 
@@ -71,7 +68,7 @@
 													document.getElementById("now_playing").innerHTML = response.value;
 												}
 
-												if (cmd == "next video title"){
+												if (cmd === "next video title"){
 													document.getElementById("up_next").innerHTML = response.value;
 												}
 											});
@@ -84,6 +81,25 @@
 	}
 
 
+	function playPauseHandler()
+	{
+		console.log("Clicked\n");
+		console.log(playPause.innerHTML)
+		play_html = "<i class=\"fa fa-play\"></i>"
+		pause_html = "<i class=\"fa fa-pause\"></i>"
+
+		if (playPause.innerHTML === play_html)
+		{			
+			playPause.innerHTML = pause_html;
+		}
+		else if (playPause.innerHTML === pause_html)
+		{
+			playPause.innerHTML = play_html;
+		}
+
+		sendCommand("play")
+	}
+
 	browser.storage.local.get().then(initialiseValues);	
 
 	mins.oninput = onInputHandler;
@@ -91,14 +107,14 @@
 	enabled.onclick = enableHandler;
 
 
+
 	
-	playPause.onclick = function(e) {sendCommand("play")};
+	playPause.onclick = playPauseHandler
 	next.onclick = function(e) {sendCommand("next video")};
 	prev.onclick = function(e) {sendCommand("prev video")};
 	timSkpF.onclick = function(e) {sendCommand("time skip f", skipValue)};
 	timSkpB.onclick = function(e) {sendCommand("time skip b", skipValue)};
 	volumeSlider.onchange = onChangeHandler;
-
 	
 	
 	sendCommand("video title");
@@ -116,3 +132,4 @@
 			sendCommand("next video title");
 		}
 	});
+
