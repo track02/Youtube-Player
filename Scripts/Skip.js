@@ -8,7 +8,8 @@
 	prev = document.getElementById("prev");
 	timSkpF = document.getElementById("time_skip_fwd");
 	timSkpB = document.getElementById("time_skip_back");
-	volumeSlider = document.getElementById("volume_slider");
+	volumeSlider = document.getElementById("volume_slider")
+
 	skipValue = 5;
 	pause = true;
 	
@@ -22,24 +23,25 @@
 		browser.storage.local.set({activeState: enabled.checked, 
 								   minutes: mins.value, 
 								   seconds: secs.value,
-								   });
-				
+								   });				
 	}
-
-
 	
 	function onInputHandler(event){
 		browser.storage.local.set({activeState: true,
 								   minutes: mins.value, 
 								   seconds: secs.value,
 								   });
-	}
-	
+	}	
 
 	function onChangeHandler(event){
 		browser.storage.local.set({vslider: volumeSlider.value});
 		sendCommand("adjust volume", volumeSlider.value);
 	}		
+
+	function playPauseHandler()	{
+		sendCommand("play");
+		sendCommand("pause status");
+	}	
 
 	function initialiseValues(data){
 
@@ -80,46 +82,9 @@
 			}
 		}
 
-		var querying = browser.tabs.query({}); //Create a query to fetch all tags
+		var querying = browser.tabs.query({}); //Create a query to fetch all tabs
 		querying.then(msgTabs); //If successful send a message to each tag
 	}
-
-
-	function playPauseHandler()
-	{
-		sendCommand("play");
-		pauseStatus();
-	}
-	
-	function pauseStatus(){
-		
-		sendCommand("pause status");
-		
-	}
-
-	//initialises the pause value to the same as the video as the add-on is loaded
-	pauseStatus();
-
-
-
-	browser.storage.local.get().then(initialiseValues);	
-
-	mins.oninput = onInputHandler;
-	secs.oninput = onInputHandler;
-	enabled.onclick = enableHandler;
-
-
-	
-	playPause.onclick = playPauseHandler;
-	next.onclick = function(e) {sendCommand("next video")};
-	prev.onclick = function(e) {sendCommand("prev video")};
-	timSkpF.onclick = function(e) {sendCommand("time skip f", skipValue)};
-	timSkpB.onclick = function(e) {sendCommand("time skip b", skipValue)};
-	volumeSlider.onchange = onChangeHandler;
-	
-	
-	sendCommand("video title");
-	sendCommand("next video title");
 
 	browser.runtime.onMessage.addListener(request => {
 
@@ -130,15 +95,12 @@
 		
 		if(cmd == "return pause"){
 			pause = param;
-			if (pause == false)
-			{			
+			if (pause == false){			
 				playPause.innerHTML = pause_html;
 			}
-			else if (pause == true)
-			{
+			else if (pause == true){
 				playPause.innerHTML = play_html;
 			}
-
 		}
 
 		if (cmd === "update headings"){
@@ -147,3 +109,23 @@
 		}
 	});
 
+	//Initialisation
+	browser.storage.local.get().then(initialiseValues);	
+
+	mins.oninput = onInputHandler;
+	secs.oninput = onInputHandler;
+	enabled.onclick = enableHandler;
+	
+	playPause.onclick = playPauseHandler;
+	next.onclick = function(e) {sendCommand("next video")};
+	prev.onclick = function(e) {sendCommand("prev video")};
+	timSkpF.onclick = function(e) {sendCommand("time skip f", skipValue)};
+	timSkpB.onclick = function(e) {sendCommand("time skip b", skipValue)};
+	volumeSlider.onchange = onChangeHandler;	
+	
+	//Request video details on page load
+	sendCommand("video title");
+	sendCommand("next video title");
+
+	//Request video pause status on page load
+	sendCommand("pause status");

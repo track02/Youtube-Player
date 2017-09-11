@@ -1,6 +1,5 @@
-
+//On message received
 browser.runtime.onMessage.addListener(request => {
-
 
 	cmd = request.command;
 
@@ -10,14 +9,13 @@ browser.runtime.onMessage.addListener(request => {
 	next = document.getElementsByClassName("ytp-next-button")[0];
 
 	//Html5 video element
-	video = document.getElementsByTagName("video")[0];
-	
-	
-	
+	video = document.getElementsByTagName("video")[0];	
 
-	
+	/*
+	 * Command Parsing
+	 */
 	if (cmd === "play"){
-			playpause.click();
+		playpause.click();
 	}
 	else if(cmd === "pause status"){
 			browser.runtime.sendMessage({
@@ -35,17 +33,12 @@ browser.runtime.onMessage.addListener(request => {
 		prev.click()	
 	}
 	else if (cmd === "video title"){
-
 		title = (document.getElementsByTagName("title")[0]).innerHTML;
-		return Promise.resolve({value: title});
-
+		return Promise.resolve({value: title}); //Sends response
 	}
 	else if (cmd === "next video title"){
-
-		nextVideo = (document.getElementsByClassName("ytp-next-button")[0]).dataset.tooltipText;
-			
-		return Promise.resolve({value: nextVideo});
-		//Send a response
+		nextVideo = (document.getElementsByClassName("ytp-next-button")[0]).dataset.tooltipText;			
+		return Promise.resolve({value: nextVideo});	//Sends response
 	}
 	else if(cmd === "time skip f"){
 		video.currentTime += parseInt(request.parameter);
@@ -55,5 +48,5 @@ browser.runtime.onMessage.addListener(request => {
 	}
 	else{
 		console.log("invalid command");
-		}	
+	}	
 });

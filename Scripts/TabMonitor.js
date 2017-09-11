@@ -13,8 +13,7 @@ function initialiseValues(data){
 	if(isEmpty(data)){
 		browser.storage.local.set({activeState: false, minutes: 0, seconds: 0, skip: 0});
 	}
-	else
-	{
+	else{
 		activeState = storedState;
 		minutes = data.minutes;
 		seconds = data.seconds;
@@ -22,8 +21,7 @@ function initialiseValues(data){
 }
 
 //On Youtube page & video playing without timestamp
-function checkUrl(url)
-{
+function checkUrl(url){
 	return ((url.indexOf("youtube") !== -1) && (url.indexOf("#t=") == -1) && (url.indexOf("watch?") !== -1))
 }
 
