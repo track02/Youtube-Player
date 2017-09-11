@@ -11,9 +11,19 @@ browser.runtime.onMessage.addListener(request => {
 
 	//Html5 video element
 	video = document.getElementsByTagName("video")[0];
+	
+	
+	
 
+	
 	if (cmd === "play"){
-		playpause.click();
+			playpause.click();
+	}
+	else if(cmd === "pause status"){
+			browser.runtime.sendMessage({
+					command: "return pause",
+					parameter: video.paused
+			});	
 	}
 	else if (cmd === "adjust volume" && video){
 			video.volume = parseFloat(request.parameter);

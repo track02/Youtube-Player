@@ -10,6 +10,10 @@
 	timSkpB = document.getElementById("time_skip_back");
 	volumeSlider = document.getElementById("volume_slider");
 	skipValue = 5;
+	pause = true;
+	
+	play_html = "<i class=\"fa fa-play\"></i>";
+	pause_html = "<i class=\"fa fa-pause\"></i>";
 
 	
 	function enableHandler(event){
@@ -83,22 +87,20 @@
 
 	function playPauseHandler()
 	{
-		console.log("Clicked\n");
-		console.log(playPause.innerHTML)
-		play_html = "<i class=\"fa fa-play\"></i>"
-		pause_html = "<i class=\"fa fa-pause\"></i>"
-
-		if (playPause.innerHTML === play_html)
-		{			
-			playPause.innerHTML = pause_html;
-		}
-		else if (playPause.innerHTML === pause_html)
-		{
-			playPause.innerHTML = play_html;
-		}
-
-		sendCommand("play")
+		sendCommand("play");
+		pauseStatus();
 	}
+	
+	function pauseStatus(){
+		
+		sendCommand("pause status");
+		
+	}
+
+	//initialises the pause value to the same as the video as the add-on is loaded
+	pauseStatus();
+
+
 
 	browser.storage.local.get().then(initialiseValues);	
 
@@ -107,9 +109,8 @@
 	enabled.onclick = enableHandler;
 
 
-
 	
-	playPause.onclick = playPauseHandler
+	playPause.onclick = playPauseHandler;
 	next.onclick = function(e) {sendCommand("next video")};
 	prev.onclick = function(e) {sendCommand("prev video")};
 	timSkpF.onclick = function(e) {sendCommand("time skip f", skipValue)};
@@ -123,9 +124,22 @@
 	browser.runtime.onMessage.addListener(request => {
 
 		cmd = request.command;
-
+		param = request.parameter;
 
 		console.log("Received Message: " + cmd);
+		
+		if(cmd == "return pause"){
+			pause = param;
+			if (pause == false)
+			{			
+				playPause.innerHTML = pause_html;
+			}
+			else if (pause == true)
+			{
+				playPause.innerHTML = play_html;
+			}
+
+		}
 
 		if (cmd === "update headings"){
 			sendCommand("video title");
