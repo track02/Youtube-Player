@@ -2,6 +2,7 @@ activeState = false;
 minutes = 0;
 seconds = 0;
 
+
 function isEmpty(obj){
 	return (Object.getOwnPropertyNames(obj).length === 0);
 }
@@ -44,8 +45,7 @@ function insertTimestamp(tabId, changeInfo, tabInfo){
 
 			browser.runtime.sendMessage({
     			command: "update headings"
-  			});
-	
+  			});	
 		}
 	);
 }

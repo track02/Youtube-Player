@@ -1,3 +1,7 @@
+function historySearch(historyItems){
+	console.log("Searching");
+}
+
 //On message received
 browser.runtime.onMessage.addListener(request => {
 
@@ -5,7 +9,6 @@ browser.runtime.onMessage.addListener(request => {
 
 	//Hook into player controls
 	playpause = document.getElementsByClassName("ytp-play-button")[0];
-	prev = document.getElementsByClassName("ytp-prev-button")[0];
 	next = document.getElementsByClassName("ytp-next-button")[0];
 
 	//Html5 video element
@@ -29,8 +32,9 @@ browser.runtime.onMessage.addListener(request => {
 	else if (cmd === "next video"){
 		next.click();
 	}
+	
 	else if (cmd === "prev video"){
-		prev.click()	
+
 	}
 	else if (cmd === "video title"){
 		title = (document.getElementsByTagName("title")[0]).innerHTML;

@@ -6,12 +6,7 @@
 .btn:focus, .btn:active {
   outline: none;
   box-shadow: none;
-}
-
-
-
-  
- 
+} 
 
 .marquee {
   height: 25px;
@@ -32,11 +27,44 @@
   animation: marquee 5s linear infinite;
 }
 
-
-
 @keyframes marquee {
   0% { left: 100%; }
   100% { left: -300%; }
+}
+
+input[type=range]{
+    /* fix for FF unable to apply focus style bug  */
+    border: 1px solid #007be1;
+    border-radius: 5px; 
+    background: #007be1;
+    /*required for proper track sizing in FF*/
+    width: 125px;
+}
+
+input[type=range]::-moz-range-track {
+    width: 100px;
+    height: 5px;
+    background: white;
+    border: none;
+    border-radius: 3px;
+}
+
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: white;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]:focus::-moz-range-track {
+    background: white;
 }
 
 
