@@ -35,14 +35,16 @@
 input[type=range]{
     /* fix for FF unable to apply focus style bug  */
     border: 1px solid #007be1;
-    border-radius: 5px; 
     background: #007be1;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     /*required for proper track sizing in FF*/
-    width: 125px;
+    width: 75px;
+    height: 40px;
 }
 
 input[type=range]::-moz-range-track {
-    width: 100px;
+    width: 50px;
     height: 5px;
     background: white;
     border: none;
