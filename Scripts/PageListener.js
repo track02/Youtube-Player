@@ -27,6 +27,16 @@ browser.runtime.onMessage.addListener(request => {
 	else if (cmd === "adjust volume" && video){
 			video.volume = parseFloat(request.parameter);
 	}
+	else if(cmd === "mute"){
+		if(video.muted == false){
+			video.muted = true;
+		}else{
+			video.muted = false;
+		}
+	}
+	else if (cmd === "mute status"){
+		return Promise.resolve({value: video.muted});
+	}
 	else if (cmd === "next video"){
 		next.click();
 	}

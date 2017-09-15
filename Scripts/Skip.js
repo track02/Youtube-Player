@@ -9,13 +9,16 @@
 	timSkpF = document.getElementById("time_skip_fwd");
 	timSkpB = document.getElementById("time_skip_back");
 	volumeSlider = document.getElementById("volume_slider")
+	volumeMute = document.getElementById("volume_mute")
 
 	skipValue = 5;
 	pause = true;
+	mute = true;
 	
 	play_html = "<i class=\"fa fa-play\"></i>";
 	pause_html = "<i class=\"fa fa-pause\"></i>";
-
+	mute_html = "<i class=\"fa fa-volume-up\"></i>";
+	unmute_html =  "<i class=\"fa fa-volume-off\"></i>";
 	
 	function enableHandler(event){
 
@@ -43,6 +46,11 @@
 		sendCommand("pause status");
 
 	}	
+	
+	function muteHandler(){
+		sendCommand("mute");
+		sendCommand("mute status");
+	}
 
 	function initialiseValues(data){
 
@@ -87,6 +95,17 @@
 														playPause.innerHTML = play_html;
 													}		
 												}
+												if(cmd === "mute status"){
+													mute = response.value;
+													console.log(mute);
+													
+													if (mute == false){			
+														volumeMute.innerHTML = mute_html;
+													}else if (mute == true){
+														volumeMute.innerHTML = unmute_html;
+													}
+
+												}
 											});
 				}  	
 			}
@@ -119,6 +138,7 @@
 	enabled.onclick = enableHandler;
 	
 	playPause.onclick = playPauseHandler;
+	volumeMute.onclick = muteHandler;
 	next.onclick = function(e) {sendCommand("next video")};
 	prev.onclick = function(e) {sendCommand("prev video")};
 	timSkpF.onclick = function(e) {sendCommand("time skip f", skipValue)};
@@ -131,3 +151,4 @@
 
 	//Request video pause status on page load
 	sendCommand("pause status");
+	sendCommand("mute status");
