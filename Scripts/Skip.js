@@ -8,10 +8,10 @@
 	prev = document.getElementById("prev");
 	timSkpF = document.getElementById("time_skip_fwd");
 	timSkpB = document.getElementById("time_skip_back");
-	volumeSlider = document.getElementById("volume_slider")
-	volumeMute = document.getElementById("volume_mute")
+	volumeSlider = document.getElementById("volume_slider");
+	timeSlider = document.getElementById("time_slider");
+	volumeMute = document.getElementById("volume_mute");
 
-	skipValue = 5;
 	pause = true;
 	mute = true;
 	
@@ -141,8 +141,8 @@
 	volumeMute.onclick = muteHandler;
 	next.onclick = function(e) {sendCommand("next video")};
 	prev.onclick = function(e) {sendCommand("prev video")};
-	timSkpF.onclick = function(e) {sendCommand("time skip f", skipValue)};
-	timSkpB.onclick = function(e) {sendCommand("time skip b", skipValue)};
+	timSkpF.onclick = function(e) {sendCommand("time skip f", timeSlider.value)};
+	timSkpB.onclick = function(e) {sendCommand("time skip b", timeSlider.value)};
 	volumeSlider.onchange = onChangeHandler;	
 	
 	//Request video details on page load
