@@ -41,6 +41,7 @@
 	function playPauseHandler()	{
 		sendCommand("play");
 		sendCommand("pause status");
+
 	}	
 
 	function initialiseValues(data){
@@ -77,6 +78,15 @@
 												if (cmd === "next video title"){
 													document.getElementById("up_next").innerHTML = response.value;
 												}
+												if(cmd === "pause status"){
+													pause = response.value;
+													
+													if (pause == false){			
+														playPause.innerHTML = pause_html;
+													}else if (pause == true){
+														playPause.innerHTML = play_html;
+													}		
+												}
 											});
 				}  	
 			}
@@ -93,15 +103,7 @@
 
 		console.log("Received Message: " + cmd);
 		
-		if(cmd == "return pause"){
-			pause = param;
-			if (pause == false){			
-				playPause.innerHTML = pause_html;
-			}
-			else if (pause == true){
-				playPause.innerHTML = play_html;
-			}
-		}
+
 
 		if (cmd === "update headings"){
 			sendCommand("video title");

@@ -21,10 +21,8 @@ browser.runtime.onMessage.addListener(request => {
 		playpause.click();
 	}
 	else if(cmd === "pause status"){
-			browser.runtime.sendMessage({
-					command: "return pause",
-					parameter: video.paused
-			});	
+		return Promise.resolve({value: video.paused});	//Sends response
+
 	}
 	else if (cmd === "adjust volume" && video){
 			video.volume = parseFloat(request.parameter);
