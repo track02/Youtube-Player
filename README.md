@@ -1,11 +1,6 @@
 # Youtube-Skipper
-Firefox extension to automatically skip Youtube videos by a specified amount of time.
 
-Also provides player control functionality from addon dropdown allowing a youtube video to be paused/played from any tab.
-
-Enter Min/Sec in the box and press enable, videos will automatically be skipped by the set amount.
-
-Disable the addon by hitting the disable button.
+Firefox extension to  provide video controls for youtube allowing video control from any tab.
 
 ## To Do
 
