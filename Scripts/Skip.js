@@ -64,6 +64,7 @@
 		}
 
 		volumeSlider.value = data.vslider;
+		timeSlider.value = data.tslider;
 		mins.value = data.minutes;
 		secs.value = data.seconds;
 	}
@@ -74,6 +75,11 @@
 		sendCommand("pause status");
 		console.log(volumeSlider.value);
 
+
+	}
+	
+	function updateTimeslider(){
+		browser.storage.local.set({tslider: timeSlider.value});
 
 	}
 
@@ -161,6 +167,7 @@
 	volumeMute.onclick = muteHandler;
 	next.onclick = nextVideo;
 	prev.onclick = function(e) {sendCommand("prev video")};
+	timeSlider.onchange = updateTimeslider;
 	timSkpF.onclick = function(e) {sendCommand("time skip f", timeSlider.value)};
 	timSkpB.onclick = function(e) {sendCommand("time skip b", timeSlider.value)};
 	volumeSlider.onchange = onChangeHandler;	
