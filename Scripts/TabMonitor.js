@@ -46,10 +46,21 @@ function insertTimestamp(tabId, changeInfo, tabInfo){
 			browser.runtime.sendMessage({
     			command: "update headings"
   			});	
+			
+			browser.runtime.sendMessage({
+    			command: "change volume"
+  			});	
+			
+			browser.runtime.sendMessage({
+    			command: "update play/pause"
+  			});	
 		}
 	);
 }
 
+
+
 browser.storage.local.get().then(initialiseValues);
 browser.tabs.onUpdated.addListener(insertTimestamp);
+
 
