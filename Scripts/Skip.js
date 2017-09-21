@@ -10,6 +10,7 @@
 	timSkpB = document.getElementById("time_skip_back");
 	volumeSlider = document.getElementById("volume_slider");
 	timeSlider = document.getElementById("time_slider");
+	timeLabel = document.getElementById("time_value");
 	volumeMute = document.getElementById("volume_mute");
 
 	pause = true;
@@ -19,9 +20,16 @@
 	pause_html = "<i class=\"fa fa-pause\"></i>";
 	mute_html = "<i class=\"fa fa-volume-up\"></i>";
 	unmute_html =  "<i class=\"fa fa-volume-off\"></i>";
+
+	function updateTimerLabel(){
+
+		timeLabel.value = timeSlider.value + "s";
+
+	}
+
+
 	
 	function enableHandler(event){
-
 		//Write to storage - Active_State = True
 		browser.storage.local.set({activeState: enabled.checked, 
 								   minutes: mins.value, 
@@ -80,7 +88,7 @@
 	
 	function updateTimeslider(){
 		browser.storage.local.set({tslider: timeSlider.value});
-
+		updateTimerLabel();
 	}
 
 
@@ -168,6 +176,7 @@
 	next.onclick = nextVideo;
 	prev.onclick = function(e) {sendCommand("prev video")};
 	timeSlider.onchange = updateTimeslider;
+
 	timSkpF.onclick = function(e) {sendCommand("time skip f", timeSlider.value)};
 	timSkpB.onclick = function(e) {sendCommand("time skip b", timeSlider.value)};
 	volumeSlider.onchange = onChangeHandler;	
@@ -181,3 +190,4 @@
 	sendCommand("pause status");
 	sendCommand("mute status");
 	
+	updateTimerLabel();
