@@ -24,6 +24,9 @@ browser.runtime.onMessage.addListener(request => {
 		return Promise.resolve({value: video.paused});	//Sends response
 
 	}
+	else if (cmd === "time"){
+		return Promise.resolve({value: video.currentTime});
+	}
 	else if (cmd === "adjust volume" && video){
 			video.volume = parseFloat(request.parameter);
 	}

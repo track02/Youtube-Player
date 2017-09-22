@@ -12,6 +12,7 @@
 	timeSlider = document.getElementById("time_slider");
 	timeLabel = document.getElementById("time_value");
 	volumeMute = document.getElementById("volume_mute");
+	cTime = document.getElementById("current_time");
 
 	pause = true;
 	mute = true;
@@ -129,6 +130,24 @@
 													}
 
 												}
+												if(cmd === "time"){
+													timeTotal = parseInt(response.value);
+													
+													hours = Math.floor(timeTotal / 3600);
+													timeTotal %= 3600;
+													minutes = Math.floor(timeTotal / 60);
+													seconds = timeTotal % 60;
+													
+													if(hours > 0){
+														cTime.innerHTML = hours + ":" + minutes + ":" + seconds;
+													}
+													else if (seconds < 10){
+														cTime.innerHTML = minutes + ":" + 0 + seconds;
+													}else{
+														cTime.innerHTML = minutes + ":" + seconds;
+
+													}
+												}
 											});
 					break;
 				}  	
@@ -190,5 +209,7 @@
 	//Request video pause status on page load
 	sendCommand("pause status");
 	sendCommand("mute status");
-	
+	sendCommand("time");
 	updateTimerLabel();
+	
+ setInterval(function(){ sendCommand("time"); }, 500);
