@@ -13,7 +13,7 @@
 	timeLabel = document.getElementById("time_value");
 	volumeMute = document.getElementById("volume_mute");
 	cTime = document.getElementById("current_time");
-
+	totalTime = 1;
 	pause = true;
 	mute = true;
 	
@@ -92,6 +92,34 @@
 		updateTimerLabel();
 	}
 
+	function parseTime(timeInput){
+		hours = Math.floor(timeInput / 3600);
+		timeInput %= 3600;
+		minutes = Math.floor(timeInput / 60);
+		seconds = timeInput % 60;
+		
+		if(hours > 0){
+			if (seconds < 10){
+				result = hours + ":" + minutes + ":" + 0 + seconds;
+			}else{
+				result = hours + ":" + minutes + ":" + seconds;
+			}
+		}
+		else if (seconds < 10){
+			result = minutes + ":" + 0 + seconds;
+		}else{
+			result = minutes + ":" + seconds;
+
+		}
+		
+		return result;
+
+	}
+	
+	function timeTimerHandler(){
+		sendCommand("time total");
+		sendCommand("time current");
+	}
 
 	function sendCommand(cmd, param){
 
@@ -130,23 +158,18 @@
 													}
 
 												}
-												if(cmd === "time"){
-													timeTotal = parseInt(response.value);
+												
+												if(cmd == "time total"){
 													
-													hours = Math.floor(timeTotal / 3600);
-													timeTotal %= 3600;
-													minutes = Math.floor(timeTotal / 60);
-													seconds = timeTotal % 60;
-													
-													if(hours > 0){
-														cTime.innerHTML = hours + ":" + minutes + ":" + seconds;
-													}
-													else if (seconds < 10){
-														cTime.innerHTML = minutes + ":" + 0 + seconds;
-													}else{
-														cTime.innerHTML = minutes + ":" + seconds;
+													timeTotal= parseTime(parseInt(response.value));
 
-													}
+												}
+												if(cmd === "time current"){
+													timeCurrent = parseInt(response.value);
+													cTime.innerHTML = parseTime(timeCurrent) + " / " + timeTotal;
+													
+													
+													
 												}
 											});
 					break;
@@ -212,4 +235,4 @@
 	sendCommand("time");
 	updateTimerLabel();
 	
- setInterval(function(){ sendCommand("time"); }, 500);
+ setInterval( timeTimerHandler , 500);
