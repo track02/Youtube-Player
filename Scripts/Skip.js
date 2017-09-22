@@ -217,7 +217,7 @@
 	//Request video pause status on page load
 	sendCommand("pause status");
 	sendCommand("mute status");
-	sendCommand("time");
 	updateTimerLabel();
+	timeTimerHandler();
 	
  setInterval( timeTimerHandler , 500);
