@@ -96,7 +96,7 @@
 		minutes = Math.floor(timeInput / 60);
 		seconds = timeInput % 60;
 		
-		result = minutes + ":" + seconds;		
+		result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);		
 		
 		return result;
 	}
@@ -220,4 +220,4 @@
 	updateTimerLabel();
 	timeTimerHandler();
 	
- setInterval( timeTimerHandler , 500);
+ 	setInterval(timeTimerHandler, 250);
