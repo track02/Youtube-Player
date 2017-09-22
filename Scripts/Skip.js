@@ -154,6 +154,10 @@
 		
 		if(cmd === "change volume"){
 		sendCommand("adjust volume", volumeSlider.value);
+		if(mute = true){
+			sendCommand("mute");
+		}
+		
 		console.log("Hello");
 		}
 
