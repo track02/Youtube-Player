@@ -93,27 +93,12 @@
 	}
 
 	function parseTime(timeInput){
-		hours = Math.floor(timeInput / 3600);
-		timeInput %= 3600;
 		minutes = Math.floor(timeInput / 60);
 		seconds = timeInput % 60;
 		
-		if(hours > 0){
-			if (seconds < 10){
-				result = hours + ":" + minutes + ":" + 0 + seconds;
-			}else{
-				result = hours + ":" + minutes + ":" + seconds;
-			}
-		}
-		else if (seconds < 10){
-			result = minutes + ":" + 0 + seconds;
-		}else{
-			result = minutes + ":" + seconds;
-
-		}
+		result = minutes + ":" + seconds;		
 		
 		return result;
-
 	}
 	
 	function timeTimerHandler(){
