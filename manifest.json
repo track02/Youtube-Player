@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Youtube-Skipper",
+  "name": "Youtube-Player",
   "version": "0.01",
 
   "description": "Youtube video skipper",
@@ -17,7 +17,7 @@
 
   "applications": {
     "gecko": {
-    "id": "YSkip@track02.addons.mozilla.org"
+    "id": "YCtrl@track02.addons.mozilla.org"
     }
   },
 
