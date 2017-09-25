@@ -24,7 +24,7 @@
 
 	function updateTimerLabel(){
 
-		timeLabel.value = timeSlider.value + "s";
+		timeLabel.value = "±" + timeSlider.value + "s";
 
 	}
 
@@ -74,6 +74,7 @@
 
 		volumeSlider.value = data.vslider;
 		timeSlider.value = data.tslider;
+		updateTimerLabel();
 		mins.value = data.minutes;
 		secs.value = data.seconds;
 	}
@@ -217,7 +218,7 @@
 	//Request video pause status on page load
 	sendCommand("pause status");
 	sendCommand("mute status");
-	updateTimerLabel();
+	
 	timeTimerHandler();
 	
  	setInterval(timeTimerHandler, 250);
