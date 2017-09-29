@@ -183,12 +183,10 @@
 		
 		if(cmd === "change volume"){
 		sendCommand("adjust volume", volumeSlider.value);
-		console.log("Hello");
 		}
 
 		if(cmd === "update play/pause"){
 		sendCommand("pause status");
-		console.log("Hello");
 		}    		
 
 	});

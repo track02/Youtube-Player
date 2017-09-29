@@ -54,7 +54,12 @@
 
 @keyframes marquee {
   0% { left: 100%; }
-  100% { left: -300%; }
+  100% { left: -200%; }
+}
+
+
+.marquee{
+  width:275px;
 }
 
 
