@@ -14,8 +14,14 @@
 	volumeMute = document.getElementById("volume_mute");
 	cTime = document.getElementById("current_time");
 	totalTime = 1;
+	dropdown = document.getElementById("dropdown_menu");
 	pause = true;
 	mute = true;
+	
+	var currentTab;
+	tabArray = new Array();
+	tabVideoNames = new Array();
+	
 	
 	play_html = "<i class=\"fa fa-play\"></i>";
 	pause_html = "<i class=\"fa fa-pause\"></i>";
@@ -109,12 +115,8 @@
 
 	function sendCommand(cmd, param){
 
-		function msgTabs(tabs) {
-			for (let tab of tabs) {
-
-				if(tab.url.indexOf("youtube") != -1 && tab.url.indexOf("watch?") != -1){
-
-					browser.tabs.sendMessage(tab.id, {command: cmd, parameter: param})
+					
+					browser.tabs.sendMessage(currentTab.id, {command: cmd, parameter: param})
 											.then(response => {
 
 												if (cmd === "video title"){
@@ -158,13 +160,6 @@
 													
 												}
 											});
-					break;
-				}  	
-			}
-		}
-
-		var querying = browser.tabs.query({}); //Create a query to fetch all tabs
-		querying.then(msgTabs); //If successful send a message to each tag
 	}
 
 	browser.runtime.onMessage.addListener(request => {
@@ -190,10 +185,52 @@
 		}    		
 
 	});
+	
+	function createTabArray(tabs){
+		for (let tab of tabs) {
 
+				if(tab.url.indexOf("youtube") != -1 && tab.url.indexOf("watch?") != -1){
+
+					tabArray.push(tab);
+					browser.tabs.sendMessage(tab.id, {command: "video title"})
+						.then(response => {
+							dropdown.options[dropdown.options.length] = new Option(response.value);
+							});
+
+					
+				}  	
+			}
+			
+
+
+		
+
+		
+
+	}
+	
+	function videoSelectHandler(){
+		currentTab = tabArray[dropdown.selectedIndex];
+			timeTimerHandler();
+	
+ 	setInterval(timeTimerHandler, 250);
+	
+		sendCommand("pause status");
+	sendCommand("mute status");
+	}
+	
+	
 	//Initialisation
 	browser.storage.local.get().then(initialiseValues);	
 
+	var querying = browser.tabs.query({}); //Create a query to fetch all tabs
+	querying.then(createTabArray); //If successful send a message to each tag
+
+	//var currentTab = tabArray[1];
+	
+	dropdown.onchange = videoSelectHandler;
+	
+	//browser.tabs.sendMessage(currentTab.id, {});
 	mins.oninput = onInputHandler;
 	secs.oninput = onInputHandler;
 	enabled.onclick = enableHandler;
