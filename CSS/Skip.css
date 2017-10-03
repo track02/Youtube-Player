@@ -68,6 +68,14 @@
   width:0px;
 }
 
+.dropdown_videos{
+  width: 400px;
+}
+
+#dropdown_menu{
+  width: 400px;
+}
+
 
 input[type=range]{
     /* fix for FF unable to apply focus style bug  */
