@@ -14,11 +14,15 @@
 	volumeMute = document.getElementById("volume_mute");
 	cTime = document.getElementById("current_time");
 	totalTime = 1;
+	
+	
 	dropdown = document.getElementById("dropdown_menu");
 	pause = true;
 	mute = true;
 	
 	var currentTab = -1;
+	currentTabPosition = 0;
+	currentTabFound = false;
 	tabArray = new Array();
 	tabVideoNames = new Array();	
 	
@@ -58,8 +62,7 @@
 	function playPauseHandler()	{
 		sendCommand("play");
 		sendCommand("pause status");
-
-	}	
+	
 	
 	function muteHandler(){
 		sendCommand("mute");
@@ -82,13 +85,13 @@
 		updateTimerLabel();
 		mins.value = data.minutes;
 		secs.value = data.seconds;
+		currentTab = data.currentT
 	}
 	
 	function nextVideo(){
 		sendCommand("next video");
 		sendCommand("adjust volume", volumeSlider.value);
 		sendCommand("pause status");
-		console.log(volumeSlider.value);
 
 
 	}
@@ -110,6 +113,7 @@
 	function timeTimerHandler(){
 		sendCommand("time total");
 		sendCommand("time current");
+
 	}
 
 	function sendCommand(cmd, param){
@@ -135,7 +139,6 @@
 												}
 												if(cmd === "mute status"){
 													mute = response.value;
-													console.log(mute);
 													
 													if (mute == false){			
 														volumeMute.innerHTML = mute_html;
@@ -185,11 +188,10 @@
 	function createTabArray(tabs){
 		
 		tabArray = [];
-		console.log("Creating Tab Array");
 		
 		dropdown.innerHTML = "";
 		var video_found = 0;
-		currentTab = -1;
+		//currentTab = -1;
 		
 		for (let tab of tabs) {
 
@@ -204,15 +206,30 @@
 						});
 				
 				if (currentTab == -1){
+
 					currentTab = tab;
 				}
+				
+				if(tabArray[tabArray.length - 1].url == currentTab.url){
+					currentTabPosition = tabArray.length - 1;
+					currentTabFound = true;
+
+				}
+				
 						
-			}  	
+			}
+			
+		}
+		
+		if(currentTabFound == false){
+			currentTab = tabArray[0]; //default to the first tab
 		}
 		
 		if (video_found == 0){
-			dropdown.innerHTML = "<option value=\"\">No Active Videos</option>";		
+			dropdown.innerHTML = "<option value=\"\">No Active Videos</option>";
 		}
+		
+
 		
 			//Request video details on page load
 			sendCommand("video title");
@@ -229,6 +246,8 @@
 		console.log("HERE");
 		console.log(dropdown.selectedIndex);
 		console.log(tabArray);
+		browser.storage.local.set({currentT: tabArray[dropdown.selectedIndex]});
+
 		currentTab = tabArray[dropdown.selectedIndex];
 		sendCommand("pause status");
 		sendCommand("mute status");
@@ -245,15 +264,12 @@
 	
 	//Initialisation
 	browser.storage.local.get().then(initialiseValues);	
-	
 	var querying = browser.tabs.query({}); //Create a query to fetch all tabs
 	querying.then(createTabArray); //If successful send a message to each tag
 	
-	//var currentTab = tabArray[1];
 	
 	dropdown.onchange = videoSelectHandler;
 	
-	//browser.tabs.sendMessage(currentTab.id, {});
 	mins.oninput = onInputHandler;
 	secs.oninput = onInputHandler;
 	enabled.onclick = enableHandler;
@@ -269,6 +285,8 @@
 	volumeSlider.onchange = onChangeHandler;	
 	volumeSlider.onclick = onChangeHandler;	
 	
+	setTimeout(function(e) {dropdown.options[currentTabPosition].selected = true}, 250)
+
  	setInterval(timeTimerHandler, 250);
-	
+
 	
