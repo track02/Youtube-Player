@@ -18,9 +18,8 @@
 	pause = true;
 	mute = true;
 	
-	var currentTab = -1;
-	tabArray = new Array();
-	tabVideoNames = new Array();	
+	var currentTabId = -1;
+	tabArray = [];
 	
 	play_html = "<i class=\"fa fa-play\"></i>";
 	pause_html = "<i class=\"fa fa-pause\"></i>";
@@ -114,7 +113,7 @@
 
 	function sendCommand(cmd, param){
 					
-					browser.tabs.sendMessage(currentTab.id, {command: cmd, parameter: param})
+					browser.tabs.sendMessage(currentTabId, {command: cmd, parameter: param})
 											.then(response => {
 
 												if (cmd === "video title"){
@@ -124,6 +123,7 @@
 												if (cmd === "next video title"){
 													document.getElementById("up_next").innerHTML = response.value;
 												}
+
 												if(cmd === "pause status"){
 													pause = response.value;
 													
@@ -133,6 +133,7 @@
 														playPause.innerHTML = play_html;
 													}		
 												}
+
 												if(cmd === "mute status"){
 													mute = response.value;
 													console.log(mute);
@@ -146,16 +147,13 @@
 												}
 												
 												if(cmd == "time total"){
-													
+													console.log("Sending time request ");
 													timeTotal= parseTime(parseInt(response.value));
-
 												}
 												if(cmd === "time current"){
+													console.log("Sending time request ");
 													timeCurrent = parseInt(response.value);
-													cTime.innerHTML = parseTime(timeCurrent) + " / " + timeTotal;
-													
-													
-													
+													cTime.innerHTML = parseTime(timeCurrent) + " / " + timeTotal;				
 												}
 											});
 	}
@@ -182,54 +180,38 @@
 
 	});
 	
-	function createTabArray(tabs){
-		
-		tabArray = [];
-		console.log("Creating Tab Array");
-		
+	function createDropdown(tabs){
+
 		dropdown.innerHTML = "";
-		var video_found = 0;
-		currentTab = -1;
+		currentTabId = -1;
 		
 		for (let tab of tabs) {
 
 			if(tab.url.indexOf("youtube") != -1 && tab.url.indexOf("watch?") != -1){
-				
-				video_found = 1;
-				
-				tabArray.push(tab);
-				browser.tabs.sendMessage(tab.id, {command: "video title"})
-					.then(response => {
-						dropdown.options[dropdown.options.length] = new Option(response.value);
-						});
-				
-				if (currentTab == -1){
-					currentTab = tab;
+
+				dropdown.options[dropdown.options.length] = new Option(tab.title, tab.id);			
+				console.log(dropdown.options);
+
+				if (currentTabId == -1){
+					currentTabId = tab.id;
+					videoSelectHandler();
 				}
 						
 			}  	
 		}
-		
-		if (video_found == 0){
-			dropdown.innerHTML = "<option value=\"\">No Active Videos</option>";		
-		}
-		
-			//Request video details on page load
-			sendCommand("video title");
-			sendCommand("next video title");
 
-			//Request video pause status on page load
-			sendCommand("pause status");
-			sendCommand("mute status");
-			timeTimerHandler();
 
+		if (dropdown.options.length == 0){
+			dropdown.options[0] = new Option("No Active Videos", null);	
+
+		}		
 	}
 	
 	function videoSelectHandler(){
 		console.log("HERE");
 		console.log(dropdown.selectedIndex);
-		console.log(tabArray);
-		currentTab = tabArray[dropdown.selectedIndex];
+		currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
+		console.log(currentTabId);
 		sendCommand("pause status");
 		sendCommand("mute status");
 		//Request video details on page load
@@ -247,9 +229,7 @@
 	browser.storage.local.get().then(initialiseValues);	
 	
 	var querying = browser.tabs.query({}); //Create a query to fetch all tabs
-	querying.then(createTabArray); //If successful send a message to each tag
-	
-	//var currentTab = tabArray[1];
+	querying.then(createDropdown); //If successful build a dropdown of all video tabs
 	
 	dropdown.onchange = videoSelectHandler;
 	
@@ -270,5 +250,6 @@
 	volumeSlider.onclick = onChangeHandler;	
 	
  	setInterval(timeTimerHandler, 250);
+
 	
 	
