@@ -62,7 +62,9 @@
 	function playPauseHandler()	{
 		sendCommand("play");
 		sendCommand("pause status");
-	
+		
+
+	}	
 	
 	function muteHandler(){
 		sendCommand("mute");
