@@ -209,7 +209,7 @@
 			}  	
 		}
 		
-		if(currentTabFound == false){
+		if(currentTabFound == false && dropdown.options.length != 0){
 					currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
 		browser.storage.local.set({currentT: currentTabId});
 
