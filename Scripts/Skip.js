@@ -19,6 +19,7 @@
 	mute = true;
 	
 	var currentTabId = -1;
+	currentTabFound = false;
 	tabArray = [];
 	
 	play_html = "<i class=\"fa fa-play\"></i>";
@@ -81,6 +82,7 @@
 		updateTimerLabel();
 		mins.value = data.minutes;
 		secs.value = data.seconds;
+		currentTabId = data.currentT;
 	}
 	
 	function nextVideo(){
@@ -183,21 +185,34 @@
 	function createDropdown(tabs){
 
 		dropdown.innerHTML = "";
-		currentTabId = -1;
+		//currentTabId = -1;
 		
 		for (let tab of tabs) {
 
 			if(tab.url.indexOf("youtube") != -1 && tab.url.indexOf("watch?") != -1){
 
 				dropdown.options[dropdown.options.length] = new Option(tab.title, tab.id);			
-				console.log(dropdown.options);
+				console.log(dropdown.options[dropdown.options.length]);
 
 				if (currentTabId == -1){
 					currentTabId = tab.id;
 					videoSelectHandler();
 				}
+				
+				if(tab.id == currentTabId){
+					dropdown.options[dropdown.options.length -1].selected = true;
+					currentTabFound = true;
+				}
+				
+				
 						
 			}  	
+		}
+		
+		if(currentTabFound == false){
+					currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
+		browser.storage.local.set({currentT: currentTabId});
+
 		}
 
 
@@ -205,12 +220,21 @@
 			dropdown.options[0] = new Option("No Active Videos", null);	
 
 		}		
+		
+		//Request video details on page load
+		sendCommand("video title");
+		sendCommand("next video title");
+
+		//Request video pause status on page load
+		sendCommand("pause status");
+		sendCommand("mute status");
 	}
 	
 	function videoSelectHandler(){
 		console.log("HERE");
 		console.log(dropdown.selectedIndex);
 		currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
+		browser.storage.local.set({currentT: currentTabId});
 		console.log(currentTabId);
 		sendCommand("pause status");
 		sendCommand("mute status");
