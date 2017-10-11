@@ -1,7 +1,3 @@
-
-	mins = document.getElementById("min");
-	secs = document.getElementById("sec");
-	enabled = document.getElementById("enabled");
 	playPause = document.getElementById("play_pause");
 	pause = document.getElementById("pause");
 	next = document.getElementById("next");
@@ -34,22 +30,6 @@
 	}
 
 
-	
-	function enableHandler(event){
-		//Write to storage - Active_State = True
-		browser.storage.local.set({activeState: enabled.checked, 
-								   minutes: mins.value, 
-								   seconds: secs.value,
-								   });				
-	}
-	
-	function onInputHandler(event){
-		browser.storage.local.set({activeState: true,
-								   minutes: mins.value, 
-								   seconds: secs.value,
-								   });
-	}	
-
 	function onChangeHandler(event){
 		browser.storage.local.set({vslider: volumeSlider.value});
 		sendCommand("adjust volume", volumeSlider.value);
@@ -58,7 +38,7 @@
 	function playPauseHandler()	{
 		sendCommand("play");
 		sendCommand("pause status");
-
+		console.log("sending play pause");
 	}	
 	
 	function muteHandler(){
@@ -68,20 +48,9 @@
 
 	function initialiseValues(data){
 
-		activeState = (data.activeState);
-			
-		if(activeState == true){
-			enabled.checked = true;
-		}
-		else{
-			enabled.checked = false;
-		}
-
 		volumeSlider.value = data.vslider;
 		timeSlider.value = data.tslider;
 		updateTimerLabel();
-		mins.value = data.minutes;
-		secs.value = data.seconds;
 		currentTabId = data.currentT;
 	}
 	
@@ -109,8 +78,10 @@
 	}
 	
 	function timeTimerHandler(){
-		sendCommand("time total");
-		sendCommand("time current");
+		if (currentTabId != -1){
+			sendCommand("time total");
+			sendCommand("time current");
+		}
 	}
 
 	function sendCommand(cmd, param){
@@ -138,7 +109,6 @@
 
 												if(cmd === "mute status"){
 													mute = response.value;
-													console.log(mute);
 													
 													if (mute == false){			
 														volumeMute.innerHTML = mute_html;
@@ -149,11 +119,9 @@
 												}
 												
 												if(cmd == "time total"){
-													console.log("Sending time request ");
 													timeTotal= parseTime(parseInt(response.value));
 												}
 												if(cmd === "time current"){
-													console.log("Sending time request ");
 													timeCurrent = parseInt(response.value);
 													cTime.innerHTML = parseTime(timeCurrent) + " / " + timeTotal;				
 												}
@@ -192,7 +160,6 @@
 			if(tab.url.indexOf("youtube") != -1 && tab.url.indexOf("watch?") != -1){
 
 				dropdown.options[dropdown.options.length] = new Option(tab.title, tab.id);			
-				console.log(dropdown.options[dropdown.options.length]);
 
 				if (currentTabId == -1){
 					currentTabId = tab.id;
@@ -218,16 +185,18 @@
 
 		if (dropdown.options.length == 0){
 			dropdown.options[0] = new Option("No Active Videos", null);	
-
-		}		
+			currentTabId = -1;
+		}
+		else {
 		
-		//Request video details on page load
-		sendCommand("video title");
-		sendCommand("next video title");
+			//Request video details on page load
+			sendCommand("video title");
+			sendCommand("next video title");
 
-		//Request video pause status on page load
-		sendCommand("pause status");
-		sendCommand("mute status");
+			//Request video pause status on page load
+			sendCommand("pause status");
+			sendCommand("mute status");
+		}
 	}
 	
 	function videoSelectHandler(){
@@ -257,10 +226,6 @@
 	
 	dropdown.onchange = videoSelectHandler;
 	
-	//browser.tabs.sendMessage(currentTab.id, {});
-	mins.oninput = onInputHandler;
-	secs.oninput = onInputHandler;
-	enabled.onclick = enableHandler;
 	
 	playPause.onclick = playPauseHandler;
 	volumeMute.onclick = muteHandler;
