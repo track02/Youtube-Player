@@ -1,7 +1,3 @@
-function historySearch(historyItems){
-	console.log("Searching");
-}
-
 //On message received
 browser.runtime.onMessage.addListener(request => {
 
@@ -21,8 +17,7 @@ browser.runtime.onMessage.addListener(request => {
 		playpause.click();
 	}
 	else if(cmd === "pause status"){
-		return Promise.resolve({value: video.paused});	//Sends response
-
+		return Promise.resolve({value: video.paused});
 	}
 	else if (cmd === "time current"){
 		return Promise.resolve({value: video.currentTime});
@@ -34,29 +29,24 @@ browser.runtime.onMessage.addListener(request => {
 			video.volume = parseFloat(request.parameter);
 	}
 	else if(cmd === "mute"){
-		if(video.muted == false){
-			video.muted = true;
-		}else{
-			video.muted = false;
-		}
+			video.muted = !video.muted;
 	}
 	else if (cmd === "mute status"){
 		return Promise.resolve({value: video.muted});
 	}
 	else if (cmd === "next video"){
 		next.click();
-	}
-	
+	}	
 	else if (cmd === "prev video"){
-
+		//ToDo or Scrap
 	}
 	else if (cmd === "video title"){
 		title = (document.getElementsByTagName("title")[0]).innerHTML;
-		return Promise.resolve({value: title}); //Sends response
+		return Promise.resolve({value: title}); 
 	}
 	else if (cmd === "next video title"){
 		nextVideo = (document.getElementsByClassName("ytp-next-button")[0]).dataset.tooltipText;			
-		return Promise.resolve({value: nextVideo});	//Sends response
+		return Promise.resolve({value: nextVideo});	
 	}
 	else if(cmd === "time skip f"){
 		video.currentTime += parseInt(request.parameter);

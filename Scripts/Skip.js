@@ -24,13 +24,11 @@
 	unmute_html =  "<i class=\"fa fa-volume-off\"></i>";
 
 	function updateTimerLabel(){
-
 		timeLabel.value = "±" + timeSlider.value + "s";
-
 	}
 
 
-	function onChangeHandler(event){
+	function onVolumeChange(event){
 		browser.storage.local.set({vslider: volumeSlider.value});
 		sendCommand("adjust volume", volumeSlider.value);
 	}		
@@ -59,8 +57,6 @@
 		sendCommand("adjust volume", volumeSlider.value);
 		sendCommand("pause status");
 		console.log(volumeSlider.value);
-
-
 	}
 	
 	function updateTimeslider(){
@@ -72,8 +68,7 @@
 		minutes = Math.floor(timeInput / 60);
 		seconds = timeInput % 60;
 		
-		result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);		
-		
+		result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);				
 		return result;
 	}
 	
@@ -133,27 +128,23 @@
 		cmd = request.command;
 		param = request.parameter;
 
-		console.log("Received Message: " + cmd);
-
 		if (cmd === "update headings"){
 			sendCommand("video title");
 			sendCommand("next video title");
 		}
 		
 		if(cmd === "change volume"){
-		sendCommand("adjust volume", volumeSlider.value);
+			sendCommand("adjust volume", volumeSlider.value);
 		}
 
 		if(cmd === "update play/pause"){
-		sendCommand("pause status");
-		}    		
-
+			sendCommand("pause status");
+		}
 	});
 	
 	function createDropdown(tabs){
 
 		dropdown.innerHTML = "";
-		//currentTabId = -1;
 		
 		for (let tab of tabs) {
 
@@ -169,17 +160,13 @@
 				if(tab.id == currentTabId){
 					dropdown.options[dropdown.options.length -1].selected = true;
 					currentTabFound = true;
-				}
-				
-				
-						
+				}						
 			}  	
 		}
 		
 		if(currentTabFound == false && dropdown.options.length != 0){
-					currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
-		browser.storage.local.set({currentT: currentTabId});
-
+			currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
+			browser.storage.local.set({currentT: currentTabId});
 		}
 
 
@@ -215,8 +202,7 @@
 		sendCommand("pause status");
 		sendCommand("mute status");
 		timeTimerHandler();
-	}
-	
+	}	
 	
 	//Initialisation
 	browser.storage.local.get().then(initialiseValues);	
@@ -226,7 +212,6 @@
 	
 	dropdown.onchange = videoSelectHandler;
 	
-	
 	playPause.onclick = playPauseHandler;
 	volumeMute.onclick = muteHandler;
 	next.onclick = nextVideo;
@@ -235,10 +220,7 @@
 
 	timSkpF.onclick = function(e) {sendCommand("time skip f", timeSlider.value)};
 	timSkpB.onclick = function(e) {sendCommand("time skip b", timeSlider.value)};
-	volumeSlider.onchange = onChangeHandler;	
-	volumeSlider.onclick = onChangeHandler;	
+	volumeSlider.onchange = onVolumeChange;	
+	volumeSlider.onclick = onVolumeChange;	
 	
- 	setInterval(timeTimerHandler, 250);
-
-	
-	
+ 	setInterval(timeTimerHandler, 250);	
