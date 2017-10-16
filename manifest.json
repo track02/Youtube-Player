@@ -3,7 +3,7 @@
   "name": "Youtube-Player",
   "version": "0.01",
 
-  "description": "Youtube video skipper",
+  "description": "Youtube video controller",
 
   "background":{
 	"scripts" :["Scripts/TabMonitor.js"]
@@ -36,8 +36,8 @@
 
   "browser_action": {
     "default_icon": "icons/play_48.png",
-    "default_title": "Youtube Skipper",
-    "default_popup": "Pages/Skip.html"
+    "default_title": "Youtube Controller",
+    "default_popup": "Pages/YCtrl.html"
   }
 
 }
