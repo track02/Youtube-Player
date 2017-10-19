@@ -8,12 +8,22 @@
   box-shadow: none;
 } 
 
+
+#MainTitle {
+     margin-left: 50%;
+     margin-top: 4%;
+	 }
+	 
+.heading{
+	margin-left:7%;
+}
+
 .marquee {
   height: 25px;
-  width: 210px;
-
+  width:275px;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  right:5%;
 }
 
 .marquee div {
@@ -25,6 +35,14 @@
   overflow: hidden;
 
   animation: marquee 5s linear infinite;
+}
+
+.button_grouping{
+	margin:1%;
+}
+
+.dropdown_videos{
+	margin:1%;
 }
 
 .slider_label{
@@ -57,9 +75,7 @@
 }
 
 
-.marquee{
-  width:275px;
-}
+
 
 
 .marquee_title{
@@ -78,13 +94,16 @@
 
 input[type=range]{
     /* fix for FF unable to apply focus style bug  */
-    border: 1px solid #007be1;
-    background: #007be1;
+    border: 1px solid #007bff;
+    background: #007bff;
     /*required for proper track sizing in FF*/
     width: 65px;
     height: 40px;
 }
 
+.slider_label{
+	background:  #007bff;
+}
 
 input[type=range]::-moz-range-track {
     width: 50px;
