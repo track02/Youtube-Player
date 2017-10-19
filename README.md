@@ -4,8 +4,7 @@ Firefox extension to  provide video controls for youtube allowing video control 
 
 ## To Do
 
-- Video playing time -> played / remaining
-- Consider removing autoskip - clunky to use and easier to just skip by 5-10s repeatedly via button press.
+- Bug fixes
 - Tidy up layout & button arrangement
 - Format + Refactor code
 
