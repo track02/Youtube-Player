@@ -54,6 +54,9 @@ browser.runtime.onMessage.addListener(request => {
 	else if(cmd === "time skip b"){
 		video.currentTime -= parseInt(request.parameter);
 	}
+	else if(cmd == "restart"){
+		video.currentTime = 0;
+	}
 	else{
 		console.log("invalid command");
 	}	

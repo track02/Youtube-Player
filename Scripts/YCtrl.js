@@ -244,7 +244,7 @@
 	playPause.onclick = playPauseHandler;
 	volumeMute.onclick = muteHandler;
 	next.onclick = nextVideo;
-	prev.onclick = function(e) {sendCommand("prev video")};
+	restart.onclick = function(e) {sendCommand("restart")};
 	timeSlider.onchange = updateTimeslider;
 
 	timSkpF.onclick = function(e) {sendCommand("time skip f", timeSlider.value)};
