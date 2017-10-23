@@ -6,7 +6,7 @@ function checkUrl(url){
 function tabUpdated(tabId, changeInfo, tabInfo){
 			
 	//Check if a video is being watched
-	if (changeInfo.url && (checkUrl(changeInfo.url)))
+	if (changeInfo.url && (checkUrl(changeInfo.url)) && changeInfo.status == "complete")
 	{
 
 		//Send update requests
@@ -24,6 +24,6 @@ function tabUpdated(tabId, changeInfo, tabInfo){
 	}
 }
 	
-browser.tabs.onUpdated.addListener(tabUpdated);
+//browser.tabs.onUpdated.addListener(tabUpdated);
 
 

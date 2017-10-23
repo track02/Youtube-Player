@@ -23,10 +23,12 @@
 	mute_html = "<i class=\"fa fa-volume-up\"></i>";
 	unmute_html =  "<i class=\"fa fa-volume-off\"></i>";
 
+	poll_status = false;
+	prev_response = "";
+
 	function updateTimerLabel(){
 		timeLabel.value = "±" + timeSlider.value + "s";
 	}
-
 
 	function onVolumeChange(event){
 		browser.storage.local.set({vslider: volumeSlider.value});
@@ -65,17 +67,31 @@
 	}
 
 	function parseTime(timeInput){
+
+		if(isNaN(timeInput)){
+			return "--:--";
+		}
+
 		minutes = Math.floor(timeInput / 60);
 		seconds = timeInput % 60;
 		
 		result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);				
 		return result;
+		
 	}
 	
-	function timeTimerHandler(){
+	function statusUpdate(){
 		if (currentTabId != -1){
 			sendCommand("time total");
 			sendCommand("time current");
+
+			if(poll_status){
+				console.log("polling");
+				sendCommand("video title");
+				sendCommand("next video title");
+				sendCommand("adjust volume", volumeSlider.value);
+				sendCommand("pause status");
+			}			
 		}
 	}
 
@@ -84,12 +100,34 @@
 					browser.tabs.sendMessage(currentTabId, {command: cmd, parameter: param})
 											.then(response => {
 
+												if (cmd == "next video"){
+													poll_status = true;
+												}
+
 												if (cmd === "video title"){
-													document.getElementById("now_playing").innerHTML = response.value;
+													if(response.value == undefined){
+														document.getElementById("now_playing").innerHTML = "---";
+													}
+													else{
+														document.getElementById("now_playing").innerHTML = response.value;					
+													}
+
+
+													//Check if change in received info - stop polling
+													if (prev_response != response.value){														
+														prev_response = response.value;
+														poll_status = false;
+														dropdown.options[dropdown.selectedIndex].text = response.value;
+													}
 												}
 
 												if (cmd === "next video title"){
-													document.getElementById("up_next").innerHTML = response.value;
+													if(response.value == undefined){
+														document.getElementById("up_next").innerHTML = "---";
+													}
+													else{
+														document.getElementById("up_next").innerHTML = response.value;					
+													}
 												}
 
 												if(cmd === "pause status"){
@@ -169,7 +207,6 @@
 			browser.storage.local.set({currentT: currentTabId});
 		}
 
-
 		if (dropdown.options.length == 0){
 			dropdown.options[0] = new Option("No Active Videos", null);	
 			currentTabId = -1;
@@ -187,21 +224,13 @@
 	}
 	
 	function videoSelectHandler(){
-		console.log("HERE");
 		console.log(dropdown.selectedIndex);
 		currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
 		browser.storage.local.set({currentT: currentTabId});
 		console.log(currentTabId);
-		sendCommand("pause status");
-		sendCommand("mute status");
-		//Request video details on page load
-		sendCommand("video title");
-		sendCommand("next video title");
-
-		//Request video pause status on page load
-		sendCommand("pause status");
-		sendCommand("mute status");
-		timeTimerHandler();
+		poll_status = true;
+		statusUpdate();
+		poll_status = false;
 	}	
 	
 	//Initialisation
@@ -223,4 +252,4 @@
 	volumeSlider.onchange = onVolumeChange;	
 	volumeSlider.onclick = onVolumeChange;	
 	
- 	setInterval(timeTimerHandler, 250);	
+ 	setInterval(statusUpdate, 250);	
