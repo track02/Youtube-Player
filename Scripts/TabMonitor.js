@@ -1,29 +1,27 @@
 //On Youtube page & video playing without timestamp
-function checkUrl(url){
-	return ((url.indexOf("youtube") !== -1) && (url.indexOf("watch?") !== -1))
-}
 
 function tabUpdated(tabId, changeInfo, tabInfo){
-			
+	
+	function checkUrl(){
+		return ((changeInfo.url.indexOf("youtube") !== -1) && (changeInfo.url.indexOf("watch?") !== -1))
+	}
+
+	
+	
 	//Check if a video is being watched
-	if (changeInfo.url && (checkUrl(changeInfo.url)) && changeInfo.status == "complete")
+	if (changeInfo.url && checkUrl() )
 	{
 
 		//Send update requests
 		browser.runtime.sendMessage({
-			command: "update headings"
+			command: "update headings", parameter: tabId, videoTitle: changeInfo.title
 			});	
+			
 		
-		browser.runtime.sendMessage({
-			command: "change volume"
-			});	
 		
-		browser.runtime.sendMessage({
-			command: "update play/pause"
-			});	
 	}
 }
 	
-//browser.tabs.onUpdated.addListener(tabUpdated);
+browser.tabs.onUpdated.addListener(tabUpdated);
 
 

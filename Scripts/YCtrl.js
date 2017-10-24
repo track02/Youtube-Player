@@ -15,6 +15,7 @@
 	mute = true;
 	
 	var currentTabId = -1;
+	var changedTabId = -1;
 	currentTabFound = false;
 	tabArray = [];
 	
@@ -38,7 +39,6 @@
 	function playPauseHandler()	{
 		sendCommand("play");
 		sendCommand("pause status");
-		console.log("sending play pause");
 	}	
 	
 	function muteHandler(){
@@ -56,9 +56,6 @@
 	
 	function nextVideo(){
 		sendCommand("next video");
-		sendCommand("adjust volume", volumeSlider.value);
-		sendCommand("pause status");
-		console.log(volumeSlider.value);
 	}
 	
 	function updateTimeslider(){
@@ -86,7 +83,6 @@
 			sendCommand("time current");
 
 			if(poll_status){
-				console.log("polling");
 				sendCommand("video title");
 				sendCommand("next video title");
 				sendCommand("adjust volume", volumeSlider.value);
@@ -100,9 +96,6 @@
 					browser.tabs.sendMessage(currentTabId, {command: cmd, parameter: param})
 											.then(response => {
 
-												if (cmd == "next video"){
-													poll_status = true;
-												}
 
 												if (cmd === "video title"){
 													if(response.value == undefined){
@@ -117,7 +110,9 @@
 													if (prev_response != response.value){														
 														prev_response = response.value;
 														poll_status = false;
-														dropdown.options[dropdown.selectedIndex].text = response.value;
+														if(changedTabId == currentTabId){
+															dropdown.options[dropdown.selectedIndex].text = response.value;
+														}
 													}
 												}
 
@@ -167,23 +162,31 @@
 		param = request.parameter;
 
 		if (cmd === "update headings"){
+			poll_status = true;
+			
 			sendCommand("video title");
 			sendCommand("next video title");
+			sendCommand("adjust volume", volumeSlider.value);
+			sendCommand("pause status");
+			
+			changedTabId = request.parameter;
+			var sending = browser.tabs.sendRequest(
+			
+			)
+			
+			changedTitle = request.videoTitle;
+			console.log(request);
+			console.log(changedTitle);
+			console.log(dropdown.options);
+
 		}
 		
-		if(cmd === "change volume"){
-			sendCommand("adjust volume", volumeSlider.value);
-		}
-
-		if(cmd === "update play/pause"){
-			sendCommand("pause status");
-		}
+	
 	});
 	
 	function createDropdown(tabs){
 
 		dropdown.innerHTML = "";
-		
 		for (let tab of tabs) {
 
 			if(tab.url.indexOf("youtube") != -1 && tab.url.indexOf("watch?") != -1){
@@ -224,21 +227,53 @@
 	}
 	
 	function videoSelectHandler(){
-		console.log(dropdown.selectedIndex);
 		currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
 		browser.storage.local.set({currentT: currentTabId});
-		console.log(currentTabId);
 		poll_status = true;
 		statusUpdate();
 		poll_status = false;
 	}	
 	
+	function tabUpdate(data){
+		var querying = browser.tabs.query({url: "*://*.youtube.com/*"});
+		var currentYoutubeTabs = querying.then(getTabs);
+		if(currentYoutubeTabs != data.InitialYoutubeTabs){
+			QueryTabs();
+		}
+	}
+	
+	
+	
+	function QueryTabs(){
+			var querying = browser.tabs.query({url: "*://*.youtube.com/*"}); //Create a query to fetch all tabs
+			querying.then(createDropdown);
+
+	}
+	
+	function logTabs(tabs){
+		urlStorage = [];
+
+		for(let tab of tabs){
+			urlStorage.push(tab.url);
+		}
+		browser.storage.local.set({InitialYoutubeTabs: urlStorage});
+	}
+	
+	function getTabs(tabs){
+		urlOfTabs = [];
+		
+		for(let tab of tabs){
+			urlOfTabs.push(tab.url);
+		}
+		return urlOfTabs;
+	}
+	
+	
+	
 	//Initialisation
 	browser.storage.local.get().then(initialiseValues);	
 	
-	var querying = browser.tabs.query({}); //Create a query to fetch all tabs
-	querying.then(createDropdown); //If successful build a dropdown of all video tabs
-	
+	QueryTabs();
 	dropdown.onchange = videoSelectHandler;
 	
 	playPause.onclick = playPauseHandler;
@@ -252,4 +287,4 @@
 	volumeSlider.onchange = onVolumeChange;	
 	volumeSlider.onclick = onVolumeChange;	
 	
- 	setInterval(statusUpdate, 250);	
+ 	setInterval(statusUpdate, 250);
