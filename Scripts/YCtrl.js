@@ -15,7 +15,6 @@
 	mute = true;
 	
 	var currentTabId = -1;
-	var changedTabId = -1;
 	currentTabFound = false;
 	tabArray = [];
 	
@@ -25,7 +24,7 @@
 	unmute_html =  "<i class=\"fa fa-volume-off\"></i>";
 
 	poll_status = false;
-	prev_response = "";
+	prev_response = ""
 
 	function updateTimerLabel(){
 		timeLabel.value = "±" + timeSlider.value + "s";
@@ -87,73 +86,73 @@
 				sendCommand("next video title");
 				sendCommand("adjust volume", volumeSlider.value);
 				sendCommand("pause status");
-			}			
+			}
+
 		}
 	}
 
 	function sendCommand(cmd, param){
+
+		browser.tabs.sendMessage(currentTabId, {command: cmd, parameter: param})
+		.then(response => {
+
+			if (cmd === "video title"){
+				if(response.value == undefined){
+					document.getElementById("now_playing").innerHTML = "---";
+				}
+				else{
+					document.getElementById("now_playing").innerHTML = response.value;					
+				}
+
+
+				//Check if change in received info - stop polling
+				if (prev_response != response.value){														
+					prev_response = response.value;
+					poll_status = false;
+					dropdown.options[dropdown.selectedIndex].text = response.value;
 					
-					browser.tabs.sendMessage(currentTabId, {command: cmd, parameter: param})
-											.then(response => {
+				}
+			}
 
+			if (cmd === "next video title"){
+				if(response.value == undefined){
+					document.getElementById("up_next").innerHTML = "---";
+				}
+				else{
+					document.getElementById("up_next").innerHTML = response.value;					
+				}
+			}
 
-												if (cmd === "video title"){
-													if(response.value == undefined){
-														document.getElementById("now_playing").innerHTML = "---";
-													}
-													else{
-														document.getElementById("now_playing").innerHTML = response.value;					
-													}
+			if(cmd === "pause status"){
+				pause = response.value;
+				
+				if (pause == false){			
+					playPause.innerHTML = pause_html;
+				}else if (pause == true){
+					playPause.innerHTML = play_html;
+				}		
+			}
 
+			if(cmd === "mute status"){
+				mute = response.value;
+				
+				if (mute == false){			
+					volumeMute.innerHTML = mute_html;
+				}else if (mute == true){
+					volumeMute.innerHTML = unmute_html;
+				}
 
-													//Check if change in received info - stop polling
-													if (prev_response != response.value){														
-														prev_response = response.value;
-														poll_status = false;
-														if(changedTabId == currentTabId){
-															dropdown.options[dropdown.selectedIndex].text = response.value;
-														}
-													}
-												}
+			}
+			
+			if(cmd == "time total"){
+				timeTotal= parseTime(parseInt(response.value));
+			}
+			if(cmd === "time current"){
+				timeCurrent = parseInt(response.value);
+				cTime.innerHTML = parseTime(timeCurrent) + " / " + timeTotal;				
+			}
+		});
 
-												if (cmd === "next video title"){
-													if(response.value == undefined){
-														document.getElementById("up_next").innerHTML = "---";
-													}
-													else{
-														document.getElementById("up_next").innerHTML = response.value;					
-													}
-												}
-
-												if(cmd === "pause status"){
-													pause = response.value;
-													
-													if (pause == false){			
-														playPause.innerHTML = pause_html;
-													}else if (pause == true){
-														playPause.innerHTML = play_html;
-													}		
-												}
-
-												if(cmd === "mute status"){
-													mute = response.value;
-													
-													if (mute == false){			
-														volumeMute.innerHTML = mute_html;
-													}else if (mute == true){
-														volumeMute.innerHTML = unmute_html;
-													}
-
-												}
-												
-												if(cmd == "time total"){
-													timeTotal= parseTime(parseInt(response.value));
-												}
-												if(cmd === "time current"){
-													timeCurrent = parseInt(response.value);
-													cTime.innerHTML = parseTime(timeCurrent) + " / " + timeTotal;				
-												}
-											});
 	}
 
 	browser.runtime.onMessage.addListener(request => {
@@ -163,24 +162,8 @@
 
 		if (cmd === "update headings"){
 			poll_status = true;
-			
-			sendCommand("video title");
-			sendCommand("next video title");
-			sendCommand("adjust volume", volumeSlider.value);
-			sendCommand("pause status");
-			
-			changedTabId = request.parameter;
-			var sending = browser.tabs.sendRequest(
-			
-			)
-			
-			changedTitle = request.videoTitle;
-			console.log(request);
-			console.log(changedTitle);
-			console.log(dropdown.options);
-
-		}
-		
+			QueryTabs()
+		}		
 	
 	});
 	
@@ -227,6 +210,7 @@
 	}
 	
 	function videoSelectHandler(){
+		QueryTabs()
 		currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
 		browser.storage.local.set({currentT: currentTabId});
 		poll_status = true;
@@ -245,8 +229,9 @@
 	
 	
 	function QueryTabs(){
-			var querying = browser.tabs.query({url: "*://*.youtube.com/*"}); //Create a query to fetch all tabs
-			querying.then(createDropdown);
+		console.log("updating dropdown")
+		var querying = browser.tabs.query({url: "*://*.youtube.com/*"}); //Create a query to fetch all tabs
+		querying.then(createDropdown);
 
 	}
 	

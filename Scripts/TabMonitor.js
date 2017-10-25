@@ -14,7 +14,7 @@ function tabUpdated(tabId, changeInfo, tabInfo){
 
 		//Send update requests
 		browser.runtime.sendMessage({
-			command: "update headings", parameter: tabId, videoTitle: changeInfo.title
+			command: "update headings", id: tabId, newtitle: changeInfo.title
 			});	
 			
 		
