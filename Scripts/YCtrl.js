@@ -72,8 +72,7 @@
 		seconds = timeInput % 60;
 		
 		result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);				
-		return result;
-		
+		return result;		
 	}
 	
 	function statusUpdate(){
@@ -87,7 +86,6 @@
 				sendCommand("adjust volume", volumeSlider.value);
 				sendCommand("pause status");
 			}
-
 		}
 	}
 
@@ -103,7 +101,6 @@
 				else{
 					document.getElementById("now_playing").innerHTML = response.value;					
 				}
-
 
 				//Check if change in received info - stop polling
 				if (prev_response != response.value){														
@@ -141,7 +138,6 @@
 				}else if (mute == true){
 					volumeMute.innerHTML = unmute_html;
 				}
-
 			}
 			
 			if(cmd == "time total"){
@@ -152,7 +148,6 @@
 				cTime.innerHTML = parseTime(timeCurrent) + " / " + timeTotal;				
 			}
 		});
-
 	}
 
 	browser.runtime.onMessage.addListener(request => {
@@ -163,8 +158,7 @@
 		if (cmd === "update headings"){
 			poll_status = true;
 			QueryTabs()
-		}		
-	
+		}			
 	});
 	
 	function createDropdown(tabs){
@@ -179,8 +173,7 @@
 				if (currentTabId == -1){
 					currentTabId = tab.id;
 					videoSelectHandler();
-				}
-				
+				}				
 				if(tab.id == currentTabId){
 					dropdown.options[dropdown.options.length -1].selected = true;
 					currentTabFound = true;
@@ -192,13 +185,11 @@
 			currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
 			browser.storage.local.set({currentT: currentTabId});
 		}
-
 		if (dropdown.options.length == 0){
 			dropdown.options[0] = new Option("No Active Videos", null);	
 			currentTabId = -1;
 		}
-		else {
-		
+		else {		
 			//Request video details on page load
 			sendCommand("video title");
 			sendCommand("next video title");
@@ -224,9 +215,7 @@
 		if(currentYoutubeTabs != data.InitialYoutubeTabs){
 			QueryTabs();
 		}
-	}
-	
-	
+	}	
 	
 	function QueryTabs(){
 		console.log("updating dropdown")
@@ -252,7 +241,6 @@
 		}
 		return urlOfTabs;
 	}
-	
 	
 	
 	//Initialisation
