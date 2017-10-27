@@ -4,24 +4,16 @@ function tabUpdated(tabId, changeInfo, tabInfo){
 	
 	function checkUrl(){
 		return ((changeInfo.url.indexOf("youtube") !== -1) && (changeInfo.url.indexOf("watch?") !== -1))
-	}
-
-	
+	}	
 	
 	//Check if a video is being watched
 	if (changeInfo.url && checkUrl() )
 	{
-
 		//Send update requests
 		browser.runtime.sendMessage({
 			command: "update headings", id: tabId, newtitle: changeInfo.title
-			});	
-			
-		
-		
+			});			
 	}
 }
 	
 browser.tabs.onUpdated.addListener(tabUpdated);
-
-
