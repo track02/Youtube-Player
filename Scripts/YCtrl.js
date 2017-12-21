@@ -23,7 +23,7 @@
 	mute_html = "<i class=\"fa fa-volume-up\"></i>";
 	unmute_html =  "<i class=\"fa fa-volume-off\"></i>";
 
-	poll_status = false;
+
 	prev_response = ""
 
 	function updateTimerLabel(){
@@ -79,13 +79,10 @@
 		if (currentTabId != -1){
 			sendCommand("time total");
 			sendCommand("time current");
-
-			if(poll_status){
-				sendCommand("video title");
-				sendCommand("next video title");
-				sendCommand("adjust volume", volumeSlider.value);
-				sendCommand("pause status");
-			}
+			sendCommand("video title");
+			sendCommand("next video title");
+			sendCommand("adjust volume", volumeSlider.value);
+			sendCommand("pause status");			
 		}
 	}
 
@@ -105,7 +102,6 @@
 				//Check if change in received info - stop polling
 				if (prev_response != response.value){														
 					prev_response = response.value;
-					poll_status = false;
 					dropdown.options[dropdown.selectedIndex].text = response.value;
 					
 				}
@@ -156,8 +152,8 @@
 		param = request.parameter;
 
 		if (cmd === "update headings"){
-			poll_status = true;
 			QueryTabs()
+			window.location.reload();
 		}			
 	});
 	
@@ -197,25 +193,15 @@
 			//Request video pause status on page load
 			sendCommand("pause status");
 			sendCommand("mute status");
-		}
+		}		
 	}
 	
 	function videoSelectHandler(){
 		QueryTabs()
 		currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
 		browser.storage.local.set({currentT: currentTabId});
-		poll_status = true;
-		statusUpdate();
-		poll_status = false;
 	}	
 	
-	function tabUpdate(data){
-		var querying = browser.tabs.query({url: "*://*.youtube.com/*"});
-		var currentYoutubeTabs = querying.then(getTabs);
-		if(currentYoutubeTabs != data.InitialYoutubeTabs){
-			QueryTabs();
-		}
-	}	
 	
 	function QueryTabs(){
 		console.log("updating dropdown")
@@ -224,14 +210,6 @@
 
 	}
 	
-	function logTabs(tabs){
-		urlStorage = [];
-
-		for(let tab of tabs){
-			urlStorage.push(tab.url);
-		}
-		browser.storage.local.set({InitialYoutubeTabs: urlStorage});
-	}
 	
 	function getTabs(tabs){
 		urlOfTabs = [];
