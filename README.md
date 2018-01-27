@@ -2,11 +2,6 @@
 
 Firefox extension to  provide video controls for youtube allowing video control from any tab.
 
-## To Do
-
-- Bug fixes
-- Tidy up layout & button arrangement
-- Format + Refactor code
 
 ## Other
 

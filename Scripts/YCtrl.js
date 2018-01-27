@@ -1,4 +1,5 @@
 	playPause = document.getElementById("play_pause");
+	playPauseIcon = document.getElementById("play_pause_icon");
 	pause = document.getElementById("pause");
 	next = document.getElementById("next");
 	prev = document.getElementById("prev");
@@ -8,6 +9,7 @@
 	timeSlider = document.getElementById("time_slider");
 	timeLabel = document.getElementById("time_value");
 	volumeMute = document.getElementById("volume_mute");
+	volumeMuteIcon = document.getElementById("volume_mute_icon");
 	cTime = document.getElementById("current_time");
 	totalTime = 1;
 	dropdown = document.getElementById("dropdown_menu");
@@ -18,10 +20,10 @@
 	currentTabFound = false;
 	tabArray = [];
 	
-	play_html = "<i class=\"fa fa-play\"></i>";
-	pause_html = "<i class=\"fa fa-pause\"></i>";
-	mute_html = "<i class=\"fa fa-volume-up\"></i>";
-	unmute_html =  "<i class=\"fa fa-volume-off\"></i>";
+	const play_class = "fa fa-play";
+	const pause_class = "fa fa-pause";
+	const mute_class = "fa fa-volume-up";
+	const unmute_class =  "fa fa-volume-off";
 
 
 	prev_response = ""
@@ -93,10 +95,10 @@
 
 			if (cmd === "video title"){
 				if(response.value == undefined){
-					document.getElementById("now_playing").innerHTML = "---";
+					document.getElementById("now_playing").textContent = "---";
 				}
 				else{
-					document.getElementById("now_playing").innerHTML = response.value;					
+					document.getElementById("now_playing").textContent = response.value;					
 				}
 
 				//Check if change in received info - stop polling
@@ -109,10 +111,10 @@
 
 			if (cmd === "next video title"){
 				if(response.value == undefined){
-					document.getElementById("up_next").innerHTML = "---";
+					document.getElementById("up_next").textContent = "---";
 				}
 				else{
-					document.getElementById("up_next").innerHTML = response.value;					
+					document.getElementById("up_next").textContent = response.value;					
 				}
 			}
 
@@ -120,9 +122,9 @@
 				pause = response.value;
 				
 				if (pause == false){			
-					playPause.innerHTML = pause_html;
+					playPauseIcon.className = pause_class;
 				}else if (pause == true){
-					playPause.innerHTML = play_html;
+					playPauseIcon.className = play_class;
 				}		
 			}
 
@@ -130,9 +132,9 @@
 				mute = response.value;
 				
 				if (mute == false){			
-					volumeMute.innerHTML = mute_html;
+					volumeMuteIcon.className = mute_class;
 				}else if (mute == true){
-					volumeMute.innerHTML = unmute_html;
+					volumeMuteIcon.className = unmute_class;
 				}
 			}
 			
@@ -141,7 +143,7 @@
 			}
 			if(cmd === "time current"){
 				timeCurrent = parseInt(response.value);
-				cTime.innerHTML = parseTime(timeCurrent) + " / " + timeTotal;				
+				cTime.textContent = parseTime(timeCurrent) + " / " + timeTotal;				
 			}
 		});
 	}
