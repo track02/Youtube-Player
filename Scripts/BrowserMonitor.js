@@ -1,11 +1,9 @@
-//On Youtube page & video playing without timestamp
-
-var volumeVal = 0;
-var timeVal = 0;
+// Default values for hotkey commands 
+var volumeVal = 5;
+var timeVal = 5;
 var currentTabId = -1;
 
-
-
+//On Youtube page & video playing without timestamp
 function tabUpdated(tabId, changeInfo, tabInfo){
 	
 	function checkUrl(){
@@ -15,26 +13,29 @@ function tabUpdated(tabId, changeInfo, tabInfo){
 	//Check if a video is being watched
 	if (changeInfo.url && checkUrl() )
 	{
-		//Send update requests
-		browser.runtime.sendMessage({
-			command: "update headings", id: tabId, newtitle: changeInfo.title
-			});			
+		//Update current TabId for hotkeys for use a fallback
+		currentTabId = tabId;
+		
+		//Send update requests - ToDo > Should only send if popup is active otherwise no receiving end to connection
+		browser.runtime.sendMessage({command: "update headings", id: tabId, newtitle: changeInfo.title});		
 	}
 }
-	
-browser.tabs.onUpdated.addListener(tabUpdated);
 
+//Listen for tab updates using above func 
+browser.tabs.onUpdated.addListener(tabUpdated);
 
 function initialiseValues(data){
 
-	volumeVal = data.vslider;
-	timeVal = data.tslider;
-	currentTabId = data.currentT;
+	// Read in stored tab - if it's valid then use it otherwise stick with default 
+	var tabReq = browser.tabs.get(data.currentT);
+	tabReq.then((validTab) => {currentTabId = (checkUrl(validTab.url)) ? validTab.id : currentTabId});
+	
+	volumeVal = (data.vslider == undefined) ? volumeVal : data.vslider;
+	timeVal = (data.tslider == undefined) ? timeVal : data.tslider;
 }
 
 function sendCommand(cmd)
 {
-
 	browser.storage.local.get().then(data =>
 	{
 		initialiseValues(data);		
@@ -66,5 +67,4 @@ browser.commands.onCommand.addListener(function(command) {
 	console.log("back hk");
 	sendCommand("time skip b");
   }
-
 });

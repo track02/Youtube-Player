@@ -11,20 +11,17 @@
 	volumeMute = document.getElementById("volume_mute");
 	volumeMuteIcon = document.getElementById("volume_mute_icon");
 	cTime = document.getElementById("current_time");
-	totalTime = 1;
 	dropdown = document.getElementById("dropdown_menu");
 	pause = true;
 	mute = true;
 	
 	var currentTabId = -1;
 	currentTabFound = false;
-	tabArray = [];
 	
 	const play_class = "fa fa-play";
 	const pause_class = "fa fa-pause";
 	const mute_class = "fa fa-volume-up";
 	const unmute_class =  "fa fa-volume-off";
-
 
 	prev_response = ""
 
@@ -104,8 +101,7 @@
 				//Check if change in received info - stop polling
 				if (prev_response != response.value){														
 					prev_response = response.value;
-					dropdown.options[dropdown.selectedIndex].text = response.value;
-					
+					dropdown.options[dropdown.selectedIndex].text = response.value;					
 				}
 			}
 
@@ -191,8 +187,6 @@
 			//Request video details on page load
 			sendCommand("video title");
 			sendCommand("next video title");
-
-			//Request video pause status on page load
 			sendCommand("pause status");
 			sendCommand("mute status");
 		}		
@@ -202,16 +196,13 @@
 		QueryTabs()
 		currentTabId = parseInt(dropdown.options[dropdown.selectedIndex].value);
 		browser.storage.local.set({currentT: currentTabId});
-	}	
-	
+	}		
 	
 	function QueryTabs(){
 		console.log("updating dropdown")
 		var querying = browser.tabs.query({url: "*://*.youtube.com/*"}); //Create a query to fetch all tabs
 		querying.then(createDropdown);
-
-	}
-	
+	}	
 	
 	function getTabs(tabs){
 		urlOfTabs = [];
@@ -220,8 +211,7 @@
 			urlOfTabs.push(tab.url);
 		}
 		return urlOfTabs;
-	}
-	
+	}	
 	
 	//Initialisation
 	browser.storage.local.get().then(initialiseValues);	
@@ -234,7 +224,6 @@
 	next.onclick = nextVideo;
 	restart.onclick = function(e) {sendCommand("restart")};
 	timeSlider.onchange = updateTimeslider;
-
 	timSkpF.onclick = function(e) {sendCommand("time skip f", timeSlider.value)};
 	timSkpB.onclick = function(e) {sendCommand("time skip b", timeSlider.value)};
 	volumeSlider.onchange = onVolumeChange;	

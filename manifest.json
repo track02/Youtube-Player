@@ -6,7 +6,7 @@
   "description": "Youtube video controller",
 
   "background":{
-	"scripts" :["Scripts/TabMonitor.js"]
+	"scripts" :["Scripts/BrowserMonitor.js"]
   },
 
 

@@ -36,9 +36,6 @@ browser.runtime.onMessage.addListener(request => {
 	}
 	else if (cmd === "next video"){
 		next.click();
-	}	
-	else if (cmd === "prev video"){
-		//ToDo or Scrap
 	}
 	else if (cmd === "video title"){
 		title = (document.getElementsByTagName("title")[0]).innerHTML;
