@@ -8,8 +8,6 @@ Firefox extension to  provide video controls for youtube allowing video control 
 - Investigate Key Listener / Custom Key Combinations via Settings
     - https://developer.mozilla.org/en-US/docs/Web/Events/keypress
     - https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Implement_a_settings_page
-- Rework of Tab Monitor to use default tab id based off last detected YT tab
-    - Default values for timeskip amount needed also
 
 
 ## Other
