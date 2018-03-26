@@ -8,6 +8,7 @@ Firefox extension to  provide video controls for youtube allowing video control 
 - Investigate Key Listener / Custom Key Combinations via Settings Page
     - https://developer.mozilla.org/en-US/docs/Web/Events/keypress
     - https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Implement_a_settings_page
+    - https://developer.mozilla.org/en-US/docs/Web/Events/keydown
 
 
 ## Other
