@@ -9,19 +9,21 @@
 	"scripts" :["Scripts/BrowserMonitor.js"]
   },
 
-
   "applications": {
     "gecko": {
     "id": "YCtrl@track02.addons.mozilla.org"
     }
   },
 
-
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
       "js": ["Scripts/PageListener.js"]
-    }
+    },
+	{
+	  "matches": ["*://*/*"],
+	  "js": ["Scripts/KeyListener.js"]
+	}
   ],
 
   "permissions": [
