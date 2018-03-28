@@ -4,6 +4,7 @@ var timeVal = 5;
 var currentTabId = -1;
 
 // Initial tab search 
+// TODO 
 
 function checkUrl(url){
 	return ((url.indexOf("youtube") !== -1) && (url.indexOf("watch?") !== -1))
@@ -54,6 +55,8 @@ function sendCommand(cmd)
 	});
 }
 
+// Listen for message from hotkey listener 
+// and route to correct tab 
 function keyMessageListener(message)
 {	
 	var command = message.hotKeyCommand	

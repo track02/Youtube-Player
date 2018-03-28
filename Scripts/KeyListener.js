@@ -1,7 +1,4 @@
 // Default values for hotkey commands 
-var volumeVal = 5;
-var timeVal = 5;
-var currentTabId = -1;
 var playPauseKey = " "; //Space
 var playNextKey = "h";
 var playResetKey = "j";
@@ -40,11 +37,9 @@ document.addEventListener('keypress', (event) => {
   }
 });
 
-
 function sendMessage(cmd)
 {	
-	browser.runtime.sendMessage({"hotKeyCommand": cmd})
-	
+	browser.runtime.sendMessage({"hotKeyCommand": cmd}) // Alerts extension to hotkey press (Browser Monitor)	
 }
 
 
