@@ -66,8 +66,6 @@ function readKeyEvent(event)
 
 	if (readModifier(mod1, event) && readModifier(mod2, event) && readModifier(mod3, event)) {	  
 
-		console.log(`ALT + CTRL + ${keyName}`);	 
-
 		if (keyName == playPauseKey) {
 			console.log("Play hk");
 			sendMessage("play-pause-hotkey");

@@ -2,6 +2,7 @@
 var volumeVal = 5;
 var timeVal = 5;
 var currentTabId = -1;
+var firstTabId = -1;
 
 startupTabCheck();
 
@@ -17,19 +18,29 @@ function startupTabCheck()
 	tabquery.then((tabs) =>
 	{
 		for(let tab of tabs){
+			
 			if (checkUrl(tab.url)){
+				
+				if (firstTabId == -1)
+				{
+					firstTabId = tab.id;
+				}				
+				
 				// Request play status 				
 				browser.tabs.sendMessage(tab.id, {command: "pause status"}).then( (response) => {
 					
 					// If false (tab is playing) -> this tab becomes current tab (first playing YT Video)
 					if (!response.value){
 						currentTabId = tab.id;
-						console.log("Tab found on startup");
 					}					
 				});
-			}
-			if (currentTabId != -1)
-				break;			
+			}			
+		}
+		
+		// If no playing videos are found default to first found YT video 
+		if (currentTabId == -1)
+		{
+			currentTabId = firstTabId;
 		}		
 	});
 }

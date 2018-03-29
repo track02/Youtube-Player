@@ -20,7 +20,7 @@ function restoreOptions() {
 
   function setCurrentChoice(result) {
     document.getElementById("mod1").value = result.mod1 || "ctrl";
-	document.getElementById("mod2").value = result.mod2 || "shift";
+	document.getElementById("mod2").value = result.mod2 || "alt";
 	document.getElementById("mod3").value = result.mod3 || "none";
 	
 	document.getElementById("playkey").value = result.playkey || " ";
