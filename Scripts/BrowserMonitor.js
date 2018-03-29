@@ -7,19 +7,25 @@ var firstTabId = -1;
 startupTabCheck();
 
 // Initial tab search 
-// TODO 
+
 function startupTabCheck()
 {
 	// Run once on startup 	
 	// Iterate over all browser tabs 
-	var tabquery = browser.tabs.query({url: "*://*.youtube.com/*"});
+	console.log("Beginning Startup Check");
+	
+	var tabquery = browser.tabs.query({});
 	
 	// If valid URL 
 	tabquery.then((tabs) =>
 	{
 		for(let tab of tabs){
 			
+			console.log(`Checking Tab - ${tab.url}`);
+					
 			if (checkUrl(tab.url)){
+				
+				console.log(`Valid Tab found ${tab.url} / ${tab.id}`);
 				
 				if (firstTabId == -1)
 				{
@@ -31,6 +37,7 @@ function startupTabCheck()
 					
 					// If false (tab is playing) -> this tab becomes current tab (first playing YT Video)
 					if (!response.value){
+						console.log(`Current Tab ID Updated - ${tab.id} `);
 						currentTabId = tab.id;
 					}					
 				});
@@ -40,6 +47,7 @@ function startupTabCheck()
 		// If no playing videos are found default to first found YT video 
 		if (currentTabId == -1)
 		{
+			console.log(`No Playing video found - falling back to first found ${firstTabId}`);
 			currentTabId = firstTabId;
 		}		
 	});
@@ -56,9 +64,10 @@ function tabUpdated(tabId, changeInfo, tabInfo){
 	//Check if a video is being watched
 	if (changeInfo.url && checkUrl(changeInfo.url) )
 	{
+		Console.log(`Tab update detected - ${changeInfo.url}`);
+		
 		//Update current TabId for hotkeys for use a fallback
 		currentTabId = tabId;
-		console.log(currentTabId);
 		
 		//Send update requests - ToDo > Should only send if popup is active otherwise no receiving end to connection
 		browser.runtime.sendMessage({command: "update headings", id: tabId, newtitle: changeInfo.title});		
@@ -70,19 +79,6 @@ browser.tabs.onUpdated.addListener(tabUpdated);
 
 //Listen for requests from key listener
 browser.runtime.onMessage.addListener(keyMessageListener);
-
-function initialiseValues(data, validTab){
-	
-	console.log(data);
-	console.log(validtab);
-
-	// Read in stored tab - if it's valid then use it otherwise stick with default 
-	if (data.currentT != undefined){		
-		currentTabId = (checkUrl(validTab.url)) ? validTab.id : currentTabId;
-	}
-	
-
-}
 
 function sendCommand(cmd)
 {
@@ -97,7 +93,7 @@ function sendCommand(cmd)
 		if (data.currentT == undefined)
 		{
 			sendTabMessage(cmd);
-			console.log("No stored tab");
+			console.log("No stored tab - trying local");
 		}
 		// If there is a tab stored in the browser storage 
 		else
@@ -108,12 +104,12 @@ function sendCommand(cmd)
 			(validTab) => { // Success - is it still a valid tab, check if it's a YT Tab and update currentTabId 
 				currentTabId = (checkUrl(validTab.url)) ? validTab.id : currentTabId;
 				sendTabMessage(cmd); // Send messsage 
-				console.log("Stored tab valid");
+				console.log("Stored tab present - valid");
 			}, 
 			(noTab) =>  // Invalid, tab no longer available 
 			{
 				sendTabMessage(cmd); // Attempt to use last currentTab 
-				console.log("stored tab invalid");
+				console.log("stored tab present - invalid");
 			});
 		}	
 	});	
@@ -128,7 +124,7 @@ function sendTabMessage(cmd)
 	}
 	else
 	{
-		console.log("local current invalid");		
+		console.log("local current invalid - not sending message");		
 	}
 }
 

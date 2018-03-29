@@ -41,7 +41,8 @@ function readModifier(mod, event)
 }
 
 function interpretCommand(event)
-{
+{	
+	
 	var getting = browser.storage.local.get();
 	getting.then((result) => 
 	{
@@ -63,6 +64,12 @@ function interpretCommand(event)
 function readKeyEvent(event)
 {
 	const keyName = event.key;
+
+	
+	console.log(`Key press detected - ${keyName}`);
+	console.log(`Modifer ${mod1} Pressed - ${readModifier(mod1, event)}`);
+	console.log(`Modifer ${mod2} Pressed - ${readModifier(mod2, event)}`);
+	console.log(`Modifer ${mod3} Pressed - ${readModifier(mod3, event)}`);
 
 	if (readModifier(mod1, event) && readModifier(mod2, event) && readModifier(mod3, event)) {	  
 
