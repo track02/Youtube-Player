@@ -1,9 +1,9 @@
 // Default values for hotkey commands 
-var playPauseKey = " "; //Space
-var playNextKey = "n";
-var playResetKey = "r";
-var timeFwdKey = "f";
-var timeBckKey = "b";
+var playPauseKey = "Space"; //Space
+var playNextKey = "KeyN";
+var playResetKey = "KeyR";
+var timeFwdKey = "KeyF";
+var timeBckKey = "KeyB";
 var mod1 = "ctrl";
 var mod2 = "alt";
 var mod3 = "none";
@@ -63,33 +63,33 @@ function interpretCommand(event)
 
 function readKeyEvent(event)
 {
-	const keyName = event.key;
+	const keyCode = event.code;
 
 	
-	console.log(`Key press detected - ${keyName}`);
+	console.log(`Key press detected - ${keyCode}`);
 	console.log(`Modifer ${mod1} Pressed - ${readModifier(mod1, event)}`);
 	console.log(`Modifer ${mod2} Pressed - ${readModifier(mod2, event)}`);
 	console.log(`Modifer ${mod3} Pressed - ${readModifier(mod3, event)}`);
 
 	if (readModifier(mod1, event) && readModifier(mod2, event) && readModifier(mod3, event)) {	  
 
-		if (keyName == playPauseKey) {
+		if (keyCode == playPauseKey) {
 			console.log("Play hk");
 			sendMessage("play-pause-hotkey");
 		}
-		if (keyName == playNextKey){
+		if (keyCode == playNextKey){
 			console.log("Next hk");
 			sendMessage("play-next-hotkey");
 		}
-		if (keyName == playResetKey){
+		if (keyCode == playResetKey){
 			console.log("Replay hk");
 			sendMessage("replay-hotkey");
 		}
-		if (keyName == timeFwdKey){
+		if (keyCode == timeFwdKey){
 			console.log("fwd hk");
 			sendMessage("skip-fwd-hotkey");
 		}
-		if (keyName == timeBckKey){
+		if (keyCode == timeBckKey){
 			console.log("back hk");
 			sendMessage("skip-back-hotkey");
 		}  

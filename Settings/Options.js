@@ -23,11 +23,11 @@ function restoreOptions() {
 	document.getElementById("mod2").value = result.mod2 || "alt";
 	document.getElementById("mod3").value = result.mod3 || "none";
 	
-	document.getElementById("playkey").value = result.playkey || " ";
-	document.getElementById("fwdkey").value = result.fwdkey || "f";
-	document.getElementById("backkey").value = result.backkey || "b";
-	document.getElementById("nextkey").value = result.nextkey || "n";
-	document.getElementById("replaykey").value = result.replaykey || "r";	
+	document.getElementById("playkey").value = result.playkey || "Space";
+	document.getElementById("fwdkey").value = result.fwdkey || "KeyF";
+	document.getElementById("backkey").value = result.backkey || "KeyB";
+	document.getElementById("nextkey").value = result.nextkey || "KeyN";
+	document.getElementById("replaykey").value = result.replaykey || "KeyR";	
   }
 
   function onError(error) {
