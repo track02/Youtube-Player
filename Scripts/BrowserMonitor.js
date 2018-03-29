@@ -4,11 +4,11 @@ var timeVal = 5;
 var currentTabId = -1;
 var firstTabId = -1;
 
-startupTabCheck();
+tabCheck();
 
 // Initial tab search 
 
-function startupTabCheck()
+function tabCheck()
 {
 	// Run once on startup 	
 	// Iterate over all browser tabs 
@@ -52,6 +52,16 @@ function startupTabCheck()
 	});
 }
 
+function tabRemoved(tabId, removeInfo)
+{
+	if (tabId == currentTabId)
+	{
+		currentTabId = -1;
+		tabCheck();
+	}	
+}
+
+
 function checkUrl(url){
 	return ((url.indexOf("youtube") !== -1) && (url.indexOf("watch?") !== -1))
 }	
@@ -75,8 +85,12 @@ function tabUpdated(tabId, changeInfo, tabInfo){
 //Listen for tab updates using above func 
 browser.tabs.onUpdated.addListener(tabUpdated);
 
+browser.tabs.onRemoved.addListener(tabRemoved)
+
 //Listen for requests from key listener
 browser.runtime.onMessage.addListener(keyMessageListener);
+
+
 
 function sendCommand(cmd)
 {
