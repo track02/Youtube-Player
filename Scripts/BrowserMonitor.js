@@ -26,37 +26,35 @@ function startupTabCheck()
 			if (checkUrl(tab.url)){
 				
 				console.log(`Valid Tab found ${tab.url} / ${tab.id}`);
-				
-				if (firstTabId == -1)
-				{
-					firstTabId = tab.id;
-				}				
-				
+
 				// Request play status 				
 				browser.tabs.sendMessage(tab.id, {command: "pause status"}).then( (response) => {
 					
+					console.log(`Response received - Pause Status ${response.value}`);
+					
 					// If false (tab is playing) -> this tab becomes current tab (first playing YT Video)
-					if (!response.value){
+					if (response.value == false){
 						console.log(`Current Tab ID Updated - ${tab.id} `);
 						currentTabId = tab.id;
-					}					
+					}
+					else
+					{
+						console.log("Non-playing video - using id as fallback");
+						// If no playing videos are found default to first found YT video 
+						if (currentTabId == -1)
+						{
+							currentTabId = tab.id;
+						}	
+					}
 				});
 			}			
 		}
-		
-		// If no playing videos are found default to first found YT video 
-		if (currentTabId == -1)
-		{
-			console.log(`No Playing video found - falling back to first found ${firstTabId}`);
-			currentTabId = firstTabId;
-		}		
 	});
 }
 
 function checkUrl(url){
 	return ((url.indexOf("youtube") !== -1) && (url.indexOf("watch?") !== -1))
 }	
-
 
 //On Youtube page & video playing without timestamp
 function tabUpdated(tabId, changeInfo, tabInfo){
