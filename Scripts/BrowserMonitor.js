@@ -64,7 +64,7 @@ function tabUpdated(tabId, changeInfo, tabInfo){
 	//Check if a video is being watched
 	if (changeInfo.url && checkUrl(changeInfo.url) )
 	{
-		Console.log(`Tab update detected - ${changeInfo.url}`);
+		console.log(`Tab update detected - ${changeInfo.url}`);
 		
 		//Update current TabId for hotkeys for use a fallback
 		currentTabId = tabId;
