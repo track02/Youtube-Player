@@ -8,6 +8,10 @@
   "background":{
 	"scripts" :["Scripts/BrowserMonitor.js"]
   },
+  
+  "options_ui": {
+    "page": "Settings/Options.html"
+  },
 
   "applications": {
     "gecko": {
@@ -21,7 +25,7 @@
       "js": ["Scripts/PageListener.js"]
     },
 	{
-	  "matches": ["*://*/*"],
+	  "matches": ["<all_urls>"],
 	  "js": ["Scripts/KeyListener.js"]
 	}
   ],

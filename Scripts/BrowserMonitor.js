@@ -3,8 +3,36 @@ var volumeVal = 5;
 var timeVal = 5;
 var currentTabId = -1;
 
+startupTabCheck();
+
 // Initial tab search 
 // TODO 
+function startupTabCheck()
+{
+	// Run once on startup 	
+	// Iterate over all browser tabs 
+	var tabquery = browser.tabs.query({url: "*://*.youtube.com/*"});
+	
+	// If valid URL 
+	tabquery.then((tabs) =>
+	{
+		for(let tab of tabs){
+			if (checkUrl(tab.url)){
+				// Request play status 				
+				browser.tabs.sendMessage(tab.id, {command: "pause status"}).then( (response) => {
+					
+					// If false (tab is playing) -> this tab becomes current tab (first playing YT Video)
+					if (!response.value){
+						currentTabId = tab.id;
+						console.log("Tab found on startup");
+					}					
+				});
+			}
+			if (currentTabId != -1)
+				break;			
+		}		
+	});
+}
 
 function checkUrl(url){
 	return ((url.indexOf("youtube") !== -1) && (url.indexOf("watch?") !== -1))
@@ -32,28 +60,67 @@ browser.tabs.onUpdated.addListener(tabUpdated);
 //Listen for requests from key listener
 browser.runtime.onMessage.addListener(keyMessageListener);
 
-function initialiseValues(data){
+function initialiseValues(data, validTab){
+	
+	console.log(data);
+	console.log(validtab);
 
 	// Read in stored tab - if it's valid then use it otherwise stick with default 
-	if (data.currentT != undefined){
-		var tabReq = browser.tabs.get(data.currentT);
-		tabReq.then((validTab) => {currentTabId = (checkUrl(validTab.url)) ? validTab.id : currentTabId});
+	if (data.currentT != undefined){		
+		currentTabId = (checkUrl(validTab.url)) ? validTab.id : currentTabId;
 	}
-	volumeVal = (data.vslider == undefined) ? volumeVal : data.vslider;
-	timeVal = (data.tslider == undefined) ? timeVal : data.tslider;
+	
+
 }
 
 function sendCommand(cmd)
 {
+	// Load stored browser data 
 	browser.storage.local.get().then(data =>
-	{
-		initialiseValues(data);		
-		if (currentTabId != -1 && currentTabId != undefined){
-			console.log(timeVal);
-			browser.tabs.sendMessage(currentTabId, {command: cmd, parameter: timeVal});	
+	{		
+		// Set time and volume values 
+		volumeVal = (data.vslider == undefined) ? volumeVal : data.vslider;
+		timeVal = (data.tslider == undefined) ? timeVal : data.tslider;
+		
+		// If no current tab is stored yet, attempt to use last changed YT Tab if possible
+		if (data.currentT == undefined)
+		{
+			sendTabMessage(cmd);
+			console.log("No stored tab");
 		}
-	});
+		// If there is a tab stored in the browser storage 
+		else
+		{
+			// Attempt to request it 
+			var tabReq = browser.tabs.get(data.currentT);
+			tabReq.then(
+			(validTab) => { // Success - is it still a valid tab, check if it's a YT Tab and update currentTabId 
+				currentTabId = (checkUrl(validTab.url)) ? validTab.id : currentTabId;
+				sendTabMessage(cmd); // Send messsage 
+				console.log("Stored tab valid");
+			}, 
+			(noTab) =>  // Invalid, tab no longer available 
+			{
+				sendTabMessage(cmd); // Attempt to use last currentTab 
+				console.log("stored tab invalid");
+			});
+		}	
+	});	
 }
+
+function sendTabMessage(cmd)
+{
+	if (currentTabId != -1)
+	{
+		browser.tabs.sendMessage(currentTabId, {command: cmd, parameter: timeVal}); 
+		console.log("local current valid");
+	}
+	else
+	{
+		console.log("local current invalid");		
+	}
+}
+
 
 // Listen for message from hotkey listener 
 // and route to correct tab 
