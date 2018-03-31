@@ -5,13 +5,10 @@ Firefox extension to  provide video controls for youtube allowing video control 
 
 ## ToDo
 
-- Investigate Key Listener / Custom Key Combinations via Settings Page
-    - https://developer.mozilla.org/en-US/docs/Web/Events/keypress
-    - https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Implement_a_settings_page
-    - https://developer.mozilla.org/en-US/docs/Web/Events/keydown
-    - Note: No Firefox support for Browser levels events, inject a new content script to every documents to listen for events
-        - Move all hotkey handling into separate .js 
-
+- Rewrite Key Listener to use Key Codes for Modifier Keys
+    - Boolean Map to register keydown / keyup
+    - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+    - https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key 
 
 ## Other
 
