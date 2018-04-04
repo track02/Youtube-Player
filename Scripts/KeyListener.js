@@ -44,8 +44,19 @@ function interpretCommand(event)
 		mod2 = result.mod2 || mod2;
 		mod3 = result.mod3 || mod3;		
 		
+		console.log(playPauseKey);
+		console.log(playNextKey);
+		console.log(playResetKey);
+		console.log(timeFwdKey);
+		console.log(timeBckKey);
+		console.log(mod1);
+		console.log(mod2);
+		console.log(mod3);
+		
 		readKeyEvent(event);		
 	});
+	
+
 }
 
 function readKeyEvent(event)
@@ -53,6 +64,10 @@ function readKeyEvent(event)
 	const keyCode = event.code;
 	
 	console.log(`Key press detected - ${keyCode}`);
+	console.log(keyMap.get(mod1));
+	console.log(keyMap.get(mod2));
+	console.log(keyMap.get(mod3));
+
 	
 	if (keyMap.get(mod1) && keyMap.get(mod2) && keyMap.get(mod3)) {	  
 
