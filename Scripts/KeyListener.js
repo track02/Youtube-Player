@@ -4,45 +4,33 @@ var playNextKey = "KeyN";
 var playResetKey = "KeyR";
 var timeFwdKey = "KeyF";
 var timeBckKey = "KeyB";
-var mod1 = "ctrl";
-var mod2 = "alt";
-var mod3 = "none";
+var mod1 = "ControlLeft";
+var mod2 = "AltLeft";
+var mod3 = "None";
 
-document.addEventListener('keypress', (event) => {
-	
+var keyMap = new Map();
+keyMap.set("None", true);
+
+document.addEventListener('keypress', (event) => {	
   interpretCommand(event);  
-
 });
 
-function sendMessage(cmd)
-{	
-	browser.runtime.sendMessage({"hotKeyCommand": cmd}) // Alerts extension to hotkey press (Browser Monitor)	
-}
+document.addEventListener('keydown', (event) => {	
+	keyMap.set(event.code, true);
+	console.log(keyMap);	
+});
 
-function readModifier(mod, event)
-{
-	if (mod == "ctrl" && event.ctrlKey)
-	{
-		return true;
-	}	
-	if (mod == "alt" && event.altKey)
-	{
-		return true;
-	}
-	if (mod == "shift" && event.shiftKey)
-	{
-		return true;
-	}	
-	if (mod == "none")
-	{
-		return true;	
-	}	
-	return false;
+document.addEventListener('keyup', (event) => {	
+	keyMap.set(event.code, false);
+	console.log(keyMap);	
+});
+
+function sendMessage(cmd){	
+	browser.runtime.sendMessage({"hotKeyCommand": cmd}) // Alerts extension to hotkey press (Browser Monitor)	
 }
 
 function interpretCommand(event)
 {	
-	
 	var getting = browser.storage.local.get();
 	getting.then((result) => 
 	{
@@ -56,23 +44,20 @@ function interpretCommand(event)
 		mod2 = result.mod2 || mod2;
 		mod3 = result.mod3 || mod3;		
 		
-		readKeyEvent(event);
-		
+		readKeyEvent(event);		
 	});
 }
 
 function readKeyEvent(event)
-{
+{		
 	const keyCode = event.code;
-
 	
 	console.log(`Key press detected - ${keyCode}`);
-	console.log(`Modifer ${mod1} Pressed - ${readModifier(mod1, event)}`);
-	console.log(`Modifer ${mod2} Pressed - ${readModifier(mod2, event)}`);
-	console.log(`Modifer ${mod3} Pressed - ${readModifier(mod3, event)}`);
+	
+	if (keyMap.get(mod1) && keyMap.get(mod2) && keyMap.get(mod3)) {	  
 
-	if (readModifier(mod1, event) && readModifier(mod2, event) && readModifier(mod3, event)) {	  
-
+		console.log("Modifiers Pressed");
+	
 		if (keyCode == playPauseKey) {
 			console.log("Play hk");
 			sendMessage("play-pause-hotkey");

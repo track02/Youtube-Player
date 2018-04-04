@@ -19,9 +19,9 @@ function saveOptions(e) {
 function restoreOptions() {
 
   function setCurrentChoice(result) {
-    document.getElementById("mod1").value = result.mod1 || "ctrl";
-	document.getElementById("mod2").value = result.mod2 || "alt";
-	document.getElementById("mod3").value = result.mod3 || "none";
+    document.getElementById("mod1").value = result.mod1 || "ControlLeft";
+	document.getElementById("mod2").value = result.mod2 || "AltLeft";
+	document.getElementById("mod3").value = result.mod3 || "None";
 	
 	document.getElementById("playkey").value = result.playkey || "Space";
 	document.getElementById("fwdkey").value = result.fwdkey || "KeyF";
