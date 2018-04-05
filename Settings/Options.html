@@ -6,9 +6,13 @@
   </head>
 
   <body>
+  
+	<p>
+	Note: When configuring your own hotkeys please be aware of possible conflicts with Firefox's default Keyboard Shortcuts along with any Hotkeys used by your other Web Extensions.
+	</p>
 
     <form id="keyform">
-        <label>Modifier (1):</label> 
+        <label>Key Modifier (1):</label> 
 		<select id="mod1">
 			<option value="ControlLeft">CtrlLeft</option>
 			<option value="AltLeft">AltLeft</option>		
@@ -16,7 +20,7 @@
 			<option value="None">None</option>			
 		</select></br>
 		
-        <label>Modifier (2):</label> 
+        <label>Key Modifier (2):</label> 
 		<select id="mod2">
 			<option value="ControlLeft">CtrlLeft</option>
 			<option value="AltLeft">AltLeft</option>		
@@ -24,33 +28,18 @@
 			<option value="None">None</option>			
 		</select></br>
 		
-        <label>Modifier (3):</label> 
+        <label>Key Modifier (3):</label> 
 		<select id = "mod3">
 			<option value="ControlLeft">CtrlLeft</option>
 			<option value="AltLeft">AltLeft</option>		
 			<option value="ShiftLeft">ShiftLeft</option>
 			<option value="None">None</option>			
 		</select></br>
-					
-		<label>Play/Pause Key: <input readonly type="text" id="playkey" class="KeyInput" ></label></br>
-		<label>Seek Fwd Key: <input readonly type="text" id="fwdkey" class="KeyInput"></label></br>
-		<label>Seek Back Key: <input readonly type="text" id="backkey" class="KeyInput"></label></br>
-		<label>Next Video Key: <input readonly type="text" id="nextkey" class="KeyInput"></label></br>
-		<label>Replay Video Key: <input readonly type="text" id="replaykey" class="KeyInput"></label></br>
 		
-				
         <button type="submit">Save</button>	
     </form>
 	
-	<p>
-		Special Keys:</br>
-		Spacebar: " "</br>
-		Left Arrow: "ArrowLeft"</br>
-		Right Arrow: "ArrowRight"</br>
-		Down Arrow: "ArrowDown"</br>
-		Up Arrow: "ArrowUp"		
-	</p>
-
+	
     <script type="text/javascript" src="Options.js"></script>
 
   </body>

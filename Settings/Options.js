@@ -10,12 +10,8 @@ for (var i = 0, len = inputs.length; i < len; i++) {
 	  event.target.value = "";
 	  event.target.value = event.code;
 	  
-  });
-  
-  
-  
+  });  
 }
-
 
 function saveOptions(e) {
   e.preventDefault();
