@@ -1,11 +1,11 @@
 // Default values for hotkey commands 
-var playPauseKey = "Space"; //Space
-var playNextKey = "KeyN";
-var playResetKey = "KeyR";
-var timeFwdKey = "KeyF";
-var timeBckKey = "KeyB";
-var mod1 = "ControlLeft";
-var mod2 = "AltLeft";
+var playPauseKey = "Enter"; 
+var playNextKey = "Period";
+var playResetKey = "Comma";
+var timeFwdKey = "Equal";
+var timeBckKey = "Minus";
+var mod1 = "ShiftLeft";
+var mod2 = "None";
 var mod3 = "None";
 
 var keyMap = new Map();

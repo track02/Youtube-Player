@@ -31,15 +31,15 @@ function saveOptions(e) {
 function restoreOptions() {
 
   function setCurrentChoice(result) {
-    document.getElementById("mod1").value = result.mod1 || "ControlLeft";
-	document.getElementById("mod2").value = result.mod2 || "AltLeft";
+    document.getElementById("mod1").value = result.mod1 || "ShiftLeft";
+	document.getElementById("mod2").value = result.mod2 || "None";
 	document.getElementById("mod3").value = result.mod3 || "None";
 	
-	document.getElementById("playkey").value = result.playkey || "Space";
-	document.getElementById("fwdkey").value = result.fwdkey || "KeyF";
-	document.getElementById("backkey").value = result.backkey || "KeyB";
-	document.getElementById("nextkey").value = result.nextkey || "KeyN";
-	document.getElementById("replaykey").value = result.replaykey || "KeyR";	
+	document.getElementById("playkey").value = result.playkey || "Enter";
+	document.getElementById("fwdkey").value = result.fwdkey || "Equal";
+	document.getElementById("backkey").value = result.backkey || "Minus";
+	document.getElementById("nextkey").value = result.nextkey || "Period";
+	document.getElementById("replaykey").value = result.replaykey || "Comma";	
   }
 
   function onError(error) {
