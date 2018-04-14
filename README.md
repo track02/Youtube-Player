@@ -5,10 +5,8 @@ Firefox extension to  provide video controls for youtube allowing video control 
 
 ## ToDo
 
-- Rewrite Key Listener to use Key Codes for Modifier Keys
-    - Boolean Map to register keydown / keyup
-    - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
-    - https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key 
+- Tidy up / final testing
+- Repackage and upload
 
 ## Other
 
