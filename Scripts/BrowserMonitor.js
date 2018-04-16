@@ -7,45 +7,27 @@ var firstTabId = -1;
 tabCheck();
 
 // Initial tab search 
-
 function tabCheck()
 {
 	// Run once on startup 	
-	// Iterate over all browser tabs 
-	console.log("Beginning Startup Check");
-	
+	// Iterate over all browser tabs 	
 	var tabquery = browser.tabs.query({});
 	
 	// If valid URL 
 	tabquery.then((tabs) =>
 	{
 		for(let tab of tabs){
-			
-			console.log(`Checking Tab - ${tab.url}`);
 					
 			if (checkUrl(tab.url)){
-				
-				console.log(`Valid Tab found ${tab.url} / ${tab.id}`);
 
 				// Request play status 				
 				browser.tabs.sendMessage(tab.id, {command: "pause status"}).then( (response) => {
 					
-					console.log(`Response received - Pause Status ${response.value}`);
-					
-					// If false (tab is playing) -> this tab becomes current tab (first playing YT Video)
-					if (response.value == false){
-						console.log(`Current Tab ID Updated - ${tab.id} `);
-						currentTabId = tab.id;
-					}
-					else
-					{
-						console.log("Non-playing video - using id as fallback");
-						// If no playing videos are found default to first found YT video 
-						if (currentTabId == -1)
-						{
-							currentTabId = tab.id;
-						}	
-					}
+					// If false (tab is playing) -> this tab becomes current tab (first playing YT Video) OR
+					// If no playing videos are found default to first found YT video 
+					if (response.value == false || currentTabId == -1)
+						currentTabId = tab.id;		
+
 				});
 			}			
 		}
@@ -71,9 +53,7 @@ function tabUpdated(tabId, changeInfo, tabInfo){
 
 	//Check if a video is being watched
 	if (changeInfo.url && checkUrl(changeInfo.url) )
-	{
-		console.log(`Tab update detected - ${changeInfo.url}`);
-		
+	{		
 		//Update current TabId for hotkeys for use a fallback
 		currentTabId = tabId;
 		
@@ -84,13 +64,10 @@ function tabUpdated(tabId, changeInfo, tabInfo){
 
 //Listen for tab updates using above func 
 browser.tabs.onUpdated.addListener(tabUpdated);
-
 browser.tabs.onRemoved.addListener(tabRemoved)
 
 //Listen for requests from key listener
 browser.runtime.onMessage.addListener(keyMessageListener);
-
-
 
 function sendCommand(cmd)
 {
@@ -102,11 +79,8 @@ function sendCommand(cmd)
 		timeVal = (data.tslider == undefined) ? timeVal : data.tslider;
 		
 		// If no current tab is stored yet, attempt to use last changed YT Tab if possible
-		if (data.currentT == undefined)
-		{
-			sendTabMessage(cmd);
-			console.log("No stored tab - trying local");
-		}
+		if (data.currentT == undefined)		
+			sendTabMessage(cmd);		
 		// If there is a tab stored in the browser storage 
 		else
 		{
@@ -116,12 +90,10 @@ function sendCommand(cmd)
 			(validTab) => { // Success - is it still a valid tab, check if it's a YT Tab and update currentTabId 
 				currentTabId = (checkUrl(validTab.url)) ? validTab.id : currentTabId;
 				sendTabMessage(cmd); // Send messsage 
-				console.log("Stored tab present - valid");
 			}, 
 			(noTab) =>  // Invalid, tab no longer available 
 			{
 				sendTabMessage(cmd); // Attempt to use last currentTab 
-				console.log("stored tab present - invalid");
 			});
 		}	
 	});	
@@ -129,15 +101,9 @@ function sendCommand(cmd)
 
 function sendTabMessage(cmd)
 {
-	if (currentTabId != -1)
-	{
+	if (currentTabId != -1)	
 		browser.tabs.sendMessage(currentTabId, {command: cmd, parameter: timeVal}); 
-		console.log("local current valid");
-	}
-	else
-	{
-		console.log("local current invalid - not sending message");		
-	}
+
 }
 
 
@@ -147,24 +113,14 @@ function keyMessageListener(message)
 {	
 	var command = message.hotKeyCommand	
 	
-	if (command == "play-pause-hotkey") {
-		console.log("receive play hk");
-		sendCommand("play");
-	}
-	if (command == "play-next-hotkey"){
-		console.log("receive Next hk");
+	if (command == "play-pause-hotkey") 
+		sendCommand("play");	
+	if (command == "play-next-hotkey")
 		sendCommand("next video");
-	}
-	if (command == "replay-hotkey"){
-		console.log("receive Replay hk");
-		sendCommand("restart");
-	}
-	if (command == "skip-fwd-hotkey"){
-		console.log("receive fwd hk");
+	if (command == "replay-hotkey")
+		sendCommand("restart");	
+	if (command == "skip-fwd-hotkey")
 		sendCommand("time skip f");
-	}
-	if (command == "skip-back-hotkey"){
-		console.log("receive back hk");
-		sendCommand("time skip b");
-	}
+	if (command == "skip-back-hotkey")
+		sendCommand("time skip b");	
 }
