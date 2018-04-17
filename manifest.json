@@ -8,7 +8,10 @@
   "background":{
 	"scripts" :["Scripts/BrowserMonitor.js"]
   },
-
+  
+  "options_ui": {
+    "page": "Settings/Options.html"
+  },
 
   "applications": {
     "gecko": {
@@ -16,12 +19,15 @@
     }
   },
 
-
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
       "js": ["Scripts/PageListener.js"]
-    }
+    },
+	{
+	  "matches": ["<all_urls>"],
+	  "js": ["Scripts/KeyListener.js"]
+	}
   ],
 
   "permissions": [
@@ -33,45 +39,5 @@
     "default_icon": "icons/play_48.png",
     "default_title": "Youtube Controller",
     "default_popup": "Pages/YCtrl.html"
-  },
-
-  "commands": {
-
-    "play-pause-hotkey": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+Space"
-      },
-      "description": "Toggles play/pause"
-    },
-
-    "play-next-hotkey": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+1"
-      },
-      "description": "Skips to next video"
-    },
-
-    "replay-hotkey": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+2"
-      },
-      "description": "Replays current video"
-    },
-
-    "skip-fwd-hotkey": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+3"
-      },
-      "description": "Jumps forward by set time slider in current video"
-    },
-
-    "skip-back-hotkey": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+4"
-      },
-      "description": "Jumps back by set time slider in current video"
-    }
-
   }
-
 }

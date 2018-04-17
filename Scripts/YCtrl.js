@@ -91,12 +91,11 @@
 		.then(response => {
 
 			if (cmd === "video title"){
-				if(response.value == undefined){
-					document.getElementById("now_playing").textContent = "---";
-				}
-				else{
+				if(response.value == undefined)
+					document.getElementById("now_playing").textContent = "---";				
+				else
 					document.getElementById("now_playing").textContent = response.value;					
-				}
+				
 
 				//Check if change in received info - stop polling
 				if (prev_response != response.value){														
@@ -106,37 +105,33 @@
 			}
 
 			if (cmd === "next video title"){
-				if(response.value == undefined){
-					document.getElementById("up_next").textContent = "---";
-				}
-				else{
-					document.getElementById("up_next").textContent = response.value;					
-				}
+				if(response.value == undefined)
+					document.getElementById("up_next").textContent = "---";				
+				else
+					document.getElementById("up_next").textContent = response.value;			
 			}
 
 			if(cmd === "pause status"){
 				pause = response.value;
 				
-				if (pause == false){			
+				if (pause == false)			
 					playPauseIcon.className = pause_class;
-				}else if (pause == true){
-					playPauseIcon.className = play_class;
-				}		
+				else if (pause == true)
+					playPauseIcon.className = play_class;				
 			}
 
 			if(cmd === "mute status"){
 				mute = response.value;
 				
-				if (mute == false){			
+				if (mute == false)			
 					volumeMuteIcon.className = mute_class;
-				}else if (mute == true){
+				else if (mute == true)
 					volumeMuteIcon.className = unmute_class;
-				}
+				
 			}
 			
-			if(cmd == "time total"){
-				timeTotal= parseTime(parseInt(response.value));
-			}
+			if(cmd == "time total")
+				timeTotal= parseTime(parseInt(response.value));			
 			if(cmd === "time current"){
 				timeCurrent = parseInt(response.value);
 				cTime.textContent = parseTime(timeCurrent) + " / " + timeTotal;				
