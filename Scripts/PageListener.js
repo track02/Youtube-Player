@@ -17,7 +17,6 @@ browser.runtime.onMessage.addListener(request => {
 		playpause.click();
 	}
 	else if(cmd === "pause status"){
-		console.log("Received!");
 		return Promise.resolve({value: video.paused});
 	}
 	else if (cmd === "time current"){

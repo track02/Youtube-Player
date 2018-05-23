@@ -33,8 +33,6 @@ function interpretCommand(event)
 	var getting = browser.storage.local.get();
 	getting.then((result) => 
 	{
-
-		console.log(result);
 		
 		playPauseKey = result.playkey || playPauseKey;
 		playNextKey = result.nextkey || playNextKey;

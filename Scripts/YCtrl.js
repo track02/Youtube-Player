@@ -1,4 +1,4 @@
-	playPause = document.getElementById("play_pause");
+﻿	playPause = document.getElementById("play_pause");
 	playPauseIcon = document.getElementById("play_pause_icon");
 	pause = document.getElementById("pause");
 	next = document.getElementById("next");
@@ -194,7 +194,6 @@
 	}		
 	
 	function QueryTabs(){
-		console.log("updating dropdown")
 		var querying = browser.tabs.query({url: "*://*.youtube.com/*"}); //Create a query to fetch all tabs
 		querying.then(createDropdown);
 	}	
