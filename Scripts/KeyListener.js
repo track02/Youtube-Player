@@ -7,6 +7,7 @@ var timeBckKey = "Minus";
 var mod1 = "ShiftLeft";
 var mod2 = "None";
 var mod3 = "None";
+var enabled = false;
 
 var keyMap = new Map();
 keyMap.set("None", true);
@@ -32,6 +33,9 @@ function interpretCommand(event)
 	var getting = browser.storage.local.get();
 	getting.then((result) => 
 	{
+
+		console.log(result);
+		
 		playPauseKey = result.playkey || playPauseKey;
 		playNextKey = result.nextkey || playNextKey;
 		playResetKey = result.replaykey || playResetKey;
@@ -41,6 +45,8 @@ function interpretCommand(event)
 		mod1 = result.mod1 || mod1;
 		mod2 = result.mod2 || mod2;
 		mod3 = result.mod3 || mod3;
+
+		enabled = result.enabled || false;
 		
 		readKeyEvent(event);		
 	});
@@ -50,7 +56,7 @@ function readKeyEvent(event)
 {		
 	const keyCode = event.code;
 	
-	if (keyMap.get(mod1) && keyMap.get(mod2) && keyMap.get(mod3)) {	  
+	if (keyMap.get(mod1) && keyMap.get(mod2) && keyMap.get(mod3) && enabled) {	  
 	
 		if (keyCode == playPauseKey) 
 			sendMessage("play-pause-hotkey");		
