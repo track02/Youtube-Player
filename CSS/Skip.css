@@ -1,3 +1,6 @@
+body {
+	min-width: 409px;	
+}
 
 .Hidden{
 	visibility: hidden;
@@ -53,7 +56,6 @@
   padding-top: 8px;
   padding-left: 5px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-
 }
 
 .volume_button{

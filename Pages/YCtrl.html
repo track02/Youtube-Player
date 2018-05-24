@@ -64,23 +64,21 @@
 			</div>
 		</div>
 
-		<div class="">
-			<div class="button_grouping" id="player_buttons">
-				<div class="btn-group">
-					<button class="btn btn-primary btn-md" id="restart"><i class="fa fa-undo"></i></button>
-					<button class="btn btn-primary btn-md" id="play_pause"><i id="play_pause_icon" class="fa fa-pause"></i></button>
-					<button class="btn btn-primary btn-md" id="next"><i class="fa fa-arrow-right"></i></button>
-					<button class="btn btn-primary btn-md" id="time_skip_back"><i class="fa fa-minus"></i></button>
-					<input name = "time-slider" id="time_slider" type="range" min="5" max="60"  step="5" value="5"/>
-					<output class="slider_label" id="time_value"></output> 
-					<button class="btn btn-primary btn-md" id="time_skip_fwd"><i class="fa fa-plus"></i></button>					
-					<button class="btn btn-primary btn-md volume_button" id="volume_mute"><i id="volume_mute_icon" class="fa fa-volume-up"></i></button>
-					<input class="end_slider_right" name = "volume-slider" id="volume_slider" type="range" min="0" max="1" step="0.1" value = "1"/> 
-				</div>
+		<div class="button_grouping row" id="player_buttons">
+			<div class="btn-group">
+				<button class="btn btn-primary btn-md" id="restart"><i class="fa fa-undo"></i></button>
+				<button class="btn btn-primary btn-md" id="play_pause"><i id="play_pause_icon" class="fa fa-pause"></i></button>
+				<button class="btn btn-primary btn-md" id="next"><i class="fa fa-arrow-right"></i></button>
+				<button class="btn btn-primary btn-md" id="time_skip_back"><i class="fa fa-minus"></i></button>
+				<input name = "time-slider" id="time_slider" type="range" min="5" max="60"  step="5" value="5"/>
+				<output class="slider_label" id="time_value"></output> 
+				<button class="btn btn-primary btn-md" id="time_skip_fwd"><i class="fa fa-plus"></i></button>					
+				<button class="btn btn-primary btn-md volume_button" id="volume_mute"><i id="volume_mute_icon" class="fa fa-volume-up"></i></button>
+				<input class="end_slider_right" name = "volume-slider" id="volume_slider" type="range" min="0" max="1" step="0.1" value = "1"/> 
 			</div>
-		</div>		
+		</div>	
 
-		 <div class="dropdown_videos">
+		 <div class="dropdown_videos row">
 			<select name="dropdown_menu" id="dropdown_menu">
 				<option value="">No Active Videos</option>
 			</select>
